@@ -21,7 +21,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* منع السكرول فالصفحة الرئيسية */
+            overflow: hidden;
         }
 
         /* ----- Custom Header Renoxbet Integrated ----- */
@@ -190,11 +190,14 @@
             white-space: nowrap;
         }
 
-        /* تعديلات الـ Iframe باش يغطي الشاشة بلا فراغات لتحت */
+        /* ضبط الـ Main والـ Iframe باش يغطي الشاشة كاملة بدون أي فراغات أو حدود من التحت */
         main {
-            width: 100%;
-            height: 100%;
-            padding-top: 56px; /* ترك مساحة للهيدر */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            padding-top: 56px;
         }
 
         .content-frame {
