@@ -1,1 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melid Bet - Registration</title>
+    <!-- Google Font: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
 
+        body {
+            background-color: #1a2332;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #17212e;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .title-bar {
+            background-color: #202d3d;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a3a4e;
+        }
+
+        .title-bar h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background-color: #2b5278;
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-card {
+            background-color: #eef2f5;
+            color: #333;
+            margin: 15px;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        /* TABS DESIGN - INTERACTIVE */
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tab-icon-box {
+            width: 100%;
+            height: 52px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-icon-box svg {
+            width: 22px;
+            height: 22px;
+            fill: #2b629d;
+            transition: fill 0.2s ease;
+        }
+
+        /* Active Tab State */
+        .tab-item.active .tab-icon-box {
+            background-color: #2b629d;
+        }
+
+        .tab-item.active .tab-icon-box svg {
+            fill: #ffffff;
+        }
+
+        .tab-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #2b629d;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            text-align: left;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .partner-card {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 12px 5px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #f0f0f0;
+        }
+
+        .partner-card span {
+            font-size: 12px;
+            color: #444;
+            font-weight: 600;
+        }
+
+        .select-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .select-field {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            font-size: 14px;
+            appearance: none;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .select-group::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            pointer-events: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #a3cc76;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #92b868;
+        }
+
+        .terms-text {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .terms-text a {
+            color: #2b629d;
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 15px;
+            font-size: 11px;
+            color: #8a9cb0;
+            text-align: center;
+        }
+
+        .footer-desc {
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .footer-desc a {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+
+        .copyright {
+            margin-bottom: 15px;
+            color: #a0aec0;
+        }
+
+        .bottom-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            background-color: #244163;
+            border: 1px solid #31547f;
+            border-radius: 8px;
+            padding: 10px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .support-btn {
+            flex: 2;
+        }
+
+        .support-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .support-info span:first-child {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .support-info span:last-child {
+            font-size: 10px;
+            color: #a0aec0;
+        }
+
+        .app-banner {
+            background: linear-gradient(135deg, #1d6aa3, #154973);
+            border-radius: 8px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+
+        .app-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .app-icons {
+            display: flex;
+            gap: 12px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <button class="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2>Registration</h2>
+        </div>
+
+        <div class="content-card">
+            <!-- TABS -->
+            <div class="tabs">
+                <!-- 1. One-click -->
+                <div class="tab-item">
+                    <div class="tab-icon-box">
+                        <svg viewBox="0 0 11 15"><path d="M10 5.5l-.2-.1H6.6L9.8 1V.8H4.9l-4 7v.3h3l-3 6.3v.3h.4l8.7-9c.1 0 .1-.1 0-.2z"></path></svg>
+                    </div>
+                    <span class="tab-label">One-click</span>
+                </div>
+
+                <!-- 2. Social networks -->
+                <div class="tab-item">
+                    <div class="tab-icon-box">
+                        <svg viewBox="0 0 32 32"><path d="M19.3 7.3c1.5.9 2.6 2.4 2.8 4.3.6.3 1.2.5 2 .5a4.7 4.7 0 000-9.3c-2.7-.1-4.8 2-4.8 4.5zm-3 9.6c2.6 0 4.6-2.2 4.6-4.7s-2.1-4.7-4.6-4.7-4.7 2.2-4.7 4.7 2 4.7 4.7 4.7zm1.9.3h-4a6 6 0 00-6 6v5h.3c3.2 1 6 1.4 8.2 1.4 4.4 0 7-1.3 7.2-1.3l.3-.2v-4.8a6 6 0 00-6-6.1zm7.8-4.8h-4c0 1.6-.7 3-1.7 4 2.9.9 5 3.6 5 6.9v1.5c4-.1 6.2-1.3 6.3-1.3l.3-.2h.1v-4.8a6 6 0 00-6-6.1zm-18-.3c1 0 1.8-.3 2.5-.8.2-1.5 1-2.8 2.2-3.7v-.3a4.7 4.7 0 00-9.3 0c0 2.6 2 4.8 4.6 4.8zm4.2 4.3c-1-1-1.7-2.5-1.8-4H6a6 6 0 00-6 6v5h.3c2.6.9 4.8 1.2 6.8 1.3v-1.4c0-3.3 2.2-6 5.1-6.9z"></path></svg>
+                    </div>
+                    <span class="tab-label">Social networks</span>
+                </div>
+
+                <!-- 3. By e-mail -->
+                <div class="tab-item">
+                    <div class="tab-icon-box">
+                        <svg viewBox="0 0 32 32"><path d="M16 20.7l-4-3.5L.8 26.9c.4.4 1 .6 1.6.6h27.4c.6 0 1.2-.2 1.6-.6L20 17.2l-4 3.5z"></path><path d="M31.3 5.3c-.4-.4-1-.6-1.6-.6H2.3c-.6 0-1.2.2-1.6.6L16 18.4 31.3 5.3zM0 6.7v19l11-9.4zM21 16.3l11 9.4v-19z"></path></svg>
+                    </div>
+                    <span class="tab-label">By e-mail</span>
+                </div>
+
+                <!-- 4. By phone -->
+                <div class="tab-item active">
+                    <div class="tab-icon-box">
+                        <svg viewBox="0 0 10 15"><path d="M8.7.7h-7C1 .7.4 1.1.4 1.7v12c0 .6.5 1 1.1 1h7.1c.6 0 1.1-.4 1.1-1v-12c0-.6-.5-1-1-1zM4 1.4h2.3l.1.1v.1H4v-.2zm1.2 12.8c-.3 0-.6-.2-.6-.4 0-.3.3-.5.6-.5s.5.2.5.5c0 .2-.2.4-.5.4zM9 13H1.3V2.2H9V13z"></path></svg>
+                    </div>
+                    <span class="tab-label">By phone</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="ID Compte">
+            </div>
+
+            <div class="partners-grid">
+                <div class="partner-card">
+                    <strong style="color: #000; font-size: 14px;">MEL<span style="color: #f5a623;">BET</span></strong>
+                    <span>Melbet</span>
+                </div>
+                <div class="partner-card">
+                    <strong style="color: #000; font-size: 12px; letter-spacing: -0.5px;">MEGA:PARI</strong>
+                    <span>MegaPari</span>
+                </div>
+                <div class="partner-card">
+                    <strong style="color: #000; font-size: 13px;">LINE<span style="color: green;">BET</span></strong>
+                    <span>LineBet</span>
+                </div>
+                <div class="partner-card">
+                    <strong style="font-size: 14px;"><span style="color: #234b7e;">1x</span><span style="color: #234b7e;">BET</span></strong>
+                    <span>1xbet</span>
+                </div>
+                <div class="partner-card">
+                    <strong style="color: #000; font-size: 13px;">goo<span style="color: #0f4c81;">bet</span></strong>
+                    <span>Gooobet</span>
+                </div>
+            </div>
+
+            <div class="select-group">
+                <select class="select-field">
+                    <option selected>Select Currency - MAD (Moroccan Dirham)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="Enter Promo Code">
+            </div>
+
+            <button class="submit-btn">Register</button>
+
+            <p class="terms-text">
+                By clicking this button you confirm that you have read and agreed to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> of the company and confirm that you are of legal age.
+            </p>
+        </div>
+
+        <footer class="footer">
+            <p class="footer-desc">
+                renoxbet uses cookies to ensure you get the best experience. By remaining on the website, you consent to the use of your cookies on renoxbet. <a href="#">Learn more</a>
+            </p>
+            <p class="copyright">
+                Copyright &copy; 2026 «renoxbet». All rights reserved and protected by law.
+            </p>
+
+            <div class="bottom-actions">
+                <button class="action-btn support-btn">
+                    <i class="fa-solid fa-headset" style="font-size: 24px; color: #62b5e5;"></i>
+                    <div class="support-info">
+                        <span>Support 24/7</span>
+                        <span>Ask any question</span>
+                    </div>
+                </button>
+                <button class="action-btn">
+                    <span>EN <span style="font-size: 14px;">🇬🇧</span></span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <div class="app-banner">
+                <div style="text-align: left;">
+                    <div class="app-title"><span style="color: #ffffff;">reno</span><span style="color: #f5a623;">xbet</span></div>
+                    <div style="font-size: 11px;">Mobile Application</div>
+                </div>
+                <div class="app-icons">
+                    <i class="fa-brands fa-android"></i>
+                    <i class="fa-brands fa-apple"></i>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript لتفعيل التنقل بين الأزرار -->
+    <script>
+        const tabs = document.querySelectorAll('.tab-item');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // إزالة التحديد من جميع الأزرار
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                // إضافة التحديد للزر الذي تم الضغط عليه
+                tab.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
