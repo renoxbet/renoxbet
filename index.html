@@ -185,14 +185,42 @@
             white-space: nowrap;
         }
 
-        /* ضبط الـ Main والـ Iframe باش يغطي الشاشة كاملة بدون أي فراغات أو حدود من التحت */
+        /* ----- Title Bar Integrated Under Header ----- */
+        .title-bar {
+            background-color: #202d3d;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a3a4e;
+            color: #ffffff;
+        }
+
+        .title-bar h2 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background-color: #2b5278;
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ضبط الـ Main والـ Iframe باش يبانو هابطين تحت الهيدر */
         main {
             position: fixed;
-            top: 0;
+            top: 56px; /* هبطنا الـ main بقيمة ارتفاع الهيدر الفوقاني */
             left: 0;
             width: 100vw;
-            height: 100vh;
-            padding-top: 0px;
+            height: calc(100vh - 56px);
         }
 
         .content-frame {
@@ -205,6 +233,7 @@
 </head>
 <body>
 
+    <!-- الهيدر الفوقاني -->
     <header class="header-bar" id="mainHeader">
         <div class="left-section">
             <a href="/" class="renox-logo">
@@ -233,7 +262,12 @@
         </div>
     </header>
 
+    <!-- الشريط وتحتو محتوى التسجيل عبر الـ Iframe -->
     <main>
+        <div class="title-bar">
+            <button class="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2>Registration</h2>
+        </div>
         <iframe src="Registration/index.html" class="content-frame" id="contentFrame"></iframe>
     </main>
 
