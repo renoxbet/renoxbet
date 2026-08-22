@@ -15,12 +15,12 @@
             font-family: 'Roboto', sans-serif;
         }
 
-        body {
+        html, body {
             background-color: #1a2332;
+            height: 100%;
             margin: 0;
-            padding: 0; /* حيدنا البادينغ الفوقاني والتحتاني باش يكون كلشي ملاصق ونقي */
-            overflow-x: hidden;
-            height: 100vh;
+            padding: 0;
+            overflow: hidden; /* حيدنا السكرول ديال الصفحة الرئيسية وخليناه داخل الـ Iframe باش ما يبقاوش الزيادات */
         }
 
         /* ----- Custom Header Renoxbet Integrated ----- */
@@ -80,6 +80,7 @@
             transform: skewX(12deg);
         }
 
+        /* Gift / Bonus Button Design */
         .gift-btn {
             position: relative;
             width: 38px;
@@ -188,12 +189,13 @@
             white-space: nowrap;
         }
 
-        /* الـ Iframe كيغطي الشاشة كاملة بدون فراغات */
+        /* الـ Iframe كيغطي الشاشة كاملة وبدون أي زيادات لتحت */
         .content-frame {
             width: 100%;
             height: 100vh;
             border: none;
             display: block;
+            padding-top: 56px; /* باش المحتوى يبدا من تحت الهيدر مباشرة وبدون فراغ */
         }
     </style>
 </head>
@@ -252,10 +254,7 @@
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         }
 
-        window.addEventListener('scroll', function() {
-            handleScroll(window.pageYOffset || document.documentElement.scrollTop);
-        });
-
+        // مراقبة السكرول داخل الـ Iframe مباشرة بدون مشاكل
         iframe.addEventListener('load', function() {
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -264,7 +263,7 @@
                     handleScroll(st);
                 });
             } catch (e) {
-                console.log("Cross-origin restriction: Run via local server.");
+                console.log("Cross-origin restriction active.");
             }
         });
     </script>
