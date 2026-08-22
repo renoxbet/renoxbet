@@ -19,15 +19,15 @@
 
         body {
             background-color: #1a2332;
-            /* درنا هنا بادينغ من الفوق باش الهيدر الثابت ما يغطيش محتوى الـ iframe */
+            /* رجعنا البادينغ باش الهيدر في الأول ياخد بلاصتو وما يغطي والو */
             padding-top: 56px; 
-            overflow: auto; /* باش يولي الموقع مسرح من لتحت وبدون حدود */
+            overflow: auto; 
         }
 
-        /* ----- Custom Header Renoxbet Integrated (Fixed) ----- */
+        /* ----- Custom Header Renoxbet (Normal position, hides when scrolling down) ----- */
         .header-bar {
             position: fixed;
-            top: 0;
+            top: 0; /* في الأول كيكون باين في بلاصتو الطبيعية */
             left: 0;
             background-color: #202d3d;
             display: flex;
@@ -37,7 +37,13 @@
             width: 100%;
             height: 56px;
             border-bottom: 1px solid #2a3a4e;
-            z-index: 1000; /* باش يبقى ديما هو الفوق كاع وما يغطيه والو */
+            z-index: 1000;
+            transition: top 0.3s ease-in-out; /* حركة سلسة باش يطلع للفوق ويختفي */
+        }
+
+        /* كلاس كيتزاد بالـ JS غير المستخدم كيهبط لتحت، باش الهيدر يهرب لفوق */
+        .header-bar.header-hidden {
+            top: -60px;
         }
 
         .left-section, .right-section {
@@ -185,7 +191,6 @@
             white-space: nowrap;
         }
 
-        /* تنسيق الـ Iframe باش ياخد الارتفاع الحقيقي ديال الصفحة الداخلية وما يبقاش مقطوع */
         .content-frame {
             width: 100%;
             height: auto;
@@ -197,8 +202,8 @@
 </head>
 <body>
 
-    <!-- Main Renoxbet Header (Fixed) -->
-    <header class="header-bar">
+    <!-- Main Renoxbet Header -->
+    <header class="header-bar" id="mainHeader">
         <div class="left-section">
             <a href="/" class="renox-logo">
                 <span class="part-reno">reno</span><span class="part-xbet">xbet</span>
@@ -228,8 +233,43 @@
 
     <!-- Page Content Iframe -->
     <main>
-        <iframe src="Registration/index.html" class="content-frame"></iframe>
+        <iframe src="Registration/index.html" class="content-frame" id="contentFrame"></iframe>
     </main>
+
+    <script>
+        const header = document.getElementById('mainHeader');
+        const iframe = document.getElementById('contentFrame');
+        let lastScrollTop = 0;
+
+        function handleScroll(scrollTop) {
+            // إيلا هبط المستخدم لتحت بأكثر من 20 بكسل، خبي الهيدر لفوق
+            if (scrollTop > lastScrollTop && scrollTop > 30) {
+                header.classList.add('header-hidden');
+            } 
+            // إيلا طلع لفوق، رجع الهيدر يبان
+            else if (scrollTop < lastScrollTop) {
+                header.classList.remove('header-hidden');
+            }
+            lastScrollTop = scrollTop;
+        }
+
+        // مراقبة السكرول في الصفحة الرئيسية
+        window.addEventListener('scroll', function() {
+            handleScroll(window.pageYOffset || document.documentElement.scrollTop);
+        });
+
+        // مراقبة السكرول داخل الـ Iframe
+        iframe.addEventListener('load', function() {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                iframeDoc.addEventListener('scroll', function() {
+                    handleScroll(iframeDoc.documentElement.scrollTop || iframeDoc.body.scrollTop);
+                });
+            } catch (e) {
+                console.log("Cross-origin restriction active.");
+            }
+        });
+    </script>
 
 </body>
 </html>
