@@ -21,7 +21,7 @@
             background-color: #1a2332;
             /* درنا هنا بادينغ من الفوق باش الهيدر الثابت ما يغطيش محتوى الـ iframe */
             padding-top: 56px; 
-            overflow: hidden; /* باش نمنعو التيراندا فالبادي الرئيسي ونخليوها غير لداخل */
+            overflow: auto; /* حيدنا التقييد باش الصفحة والـ iframe ياخدو راحتهم فالتسريح لتحت وما يبقاش المضمون مخبي */
         }
 
         /* ----- Custom Header Renoxbet Integrated (Fixed) ----- */
@@ -185,10 +185,10 @@
             white-space: nowrap;
         }
 
-        /* تنسيق الـ Iframe باش ياخد داكشي لي بقا فالتتحت ديما */
+        /* تنسيق الـ Iframe باش ياخد العبارة المطلوبة وما يبقاش محدود */
         .content-frame {
             width: 100%;
-            height: calc(100vh - 56px);
+            min-height: calc(100vh - 56px);
             border: none;
             display: block;
         }
