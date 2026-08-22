@@ -26,7 +26,7 @@
 
         /* ----- Custom Header Renoxbet Integrated ----- */
         .header-bar {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             background-color: #202d3d;
@@ -38,11 +38,6 @@
             height: 56px;
             border-bottom: 1px solid #2a3a4e;
             z-index: 1000;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .header-bar.header-hidden {
-            transform: translateY(-100%);
         }
 
         .left-section, .right-section {
@@ -241,40 +236,6 @@
     <main>
         <iframe src="Registration/index.html" class="content-frame" id="contentFrame"></iframe>
     </main>
-
-    <script>
-        const header = document.getElementById('mainHeader');
-        const iframe = document.getElementById('contentFrame');
-        let lastScrollTop = 0;
-
-        function handleScroll(scrollTop) {
-            if (scrollTop <= 10) {
-                header.classList.remove('header-hidden');
-                lastScrollTop = scrollTop;
-                return;
-            }
-
-            if (scrollTop > lastScrollTop) {
-                header.classList.add('header-hidden');
-            } else {
-                header.classList.remove('header-hidden');
-            }
-            
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        }
-
-        iframe.addEventListener('load', function() {
-            try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                iframeDoc.addEventListener('scroll', function() {
-                    let st = iframeDoc.documentElement.scrollTop || iframeDoc.body.scrollTop;
-                    handleScroll(st);
-                });
-            } catch (e) {
-                console.log("Cross-origin restriction active.");
-            }
-        });
-    </script>
 
 </body>
 </html>
