@@ -15,12 +15,11 @@
             font-family: 'Roboto', sans-serif;
         }
 
-        html, body {
+        body {
             background-color: #1a2332;
-            height: 100%;
+            padding-top: 56px; /* البادينغ القياسي باش الهيدر ياخد بلاصتو فالبداية */
             margin: 0;
-            padding: 0;
-            overflow: hidden; /* حيدنا السكرول ديال الصفحة الرئيسية وخليناه داخل الـ Iframe باش ما يبقاوش الزيادات */
+            overflow-x: hidden;
         }
 
         /* ----- Custom Header Renoxbet Integrated ----- */
@@ -37,9 +36,11 @@
             height: 56px;
             border-bottom: 1px solid #2a3a4e;
             z-index: 1000;
+            /* سلاسة تامة في الحركة بحال التطبيقات الكبرى */
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* كلاس كيتزاد باش الهيدر يطلع لفوق ويختفي بسلاسة */
         .header-bar.header-hidden {
             transform: translateY(-100%);
         }
@@ -189,13 +190,12 @@
             white-space: nowrap;
         }
 
-        /* الـ Iframe كيغطي الشاشة كاملة وبدون أي زيادات لتحت */
+        /* تنسيق الـ Iframe باش يغطي الشاشة بلا فراغات زرقاء زايدة */
         .content-frame {
             width: 100%;
             height: 100vh;
             border: none;
             display: block;
-            padding-top: 56px; /* باش المحتوى يبدا من تحت الهيدر مباشرة وبدون فراغ */
         }
     </style>
 </head>
@@ -239,22 +239,31 @@
         let lastScrollTop = 0;
 
         function handleScroll(scrollTop) {
+            // إيلا كان فالفوق كاع (أقل من 10 بكسل)، ديما رده يبان
             if (scrollTop <= 10) {
                 header.classList.remove('header-hidden');
                 lastScrollTop = scrollTop;
                 return;
             }
 
+            // إيلا هبط المستخدم لتحت، خبي الهيدر
             if (scrollTop > lastScrollTop) {
                 header.classList.add('header-hidden');
-            } else {
+            } 
+            // إيلا طلع لفوق، رده يبان
+            else {
                 header.classList.remove('header-hidden');
             }
             
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         }
 
-        // مراقبة السكرول داخل الـ Iframe مباشرة بدون مشاكل
+        // مراقبة السكرول في الصفحة الرئيسية
+        window.addEventListener('scroll', function() {
+            handleScroll(window.pageYOffset || document.documentElement.scrollTop);
+        });
+
+        // مراقبة السكرول داخل الـ Iframe بسلاسة
         iframe.addEventListener('load', function() {
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -263,7 +272,7 @@
                     handleScroll(st);
                 });
             } catch (e) {
-                console.log("Cross-origin restriction active.");
+                console.log("Cross-origin restriction: Run via local server.");
             }
         });
     </script>
