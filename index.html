@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renoxbet Header</title>
+    <!-- Google Font: Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -17,14 +19,11 @@
 
         body {
             background-color: #1a2332;
-            /* حيدنا البادينغ الثابت حيت الهيدر ولا كيتخبا ويبان بحرية */
+            /* رجعنا البادي عادي بدون بادينغ فالفوق حيت الهيدر ماشي ثابت */
         }
 
-        /* ----- Custom Header Renoxbet Integrated (Hide/Show on Scroll) ----- */
+        /* ----- Custom Header Renoxbet Integrated (Normal Flow) ----- */
         .header-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
             background-color: #202d3d;
             display: flex;
             justify-content: space-between;
@@ -33,14 +32,7 @@
             width: 100%;
             height: 56px;
             border-bottom: 1px solid #2a3a4e;
-            z-index: 1000;
-            /* إضافة الانتقال السلس باش الهيدر يطلع ويغبر بلا ما يتقطع بصدمة */
-            transition: top 0.3s ease-in-out;
-        }
-
-        /* كلاس كنستعملوه باش نخبيو الهيدر لفوق */
-        .header-hidden {
-            top: -56px !important;
+            /* حيدنا position: fixed باش الهيدر يطلع الفوق مع الصفحة ملي كيهبط المستخدم */
         }
 
         .left-section, .right-section {
@@ -188,10 +180,11 @@
             white-space: nowrap;
         }
 
-        /* تنسيق الـ Iframe باش ياخد الشاشة كاملة وتكون السكرول داخلو */
+        /* تنسيق الـ Iframe باش ياخد الباقي وتكون الصفحة طبيعية */
         .content-frame {
             width: 100%;
-            height: 100vh;
+            /* الارتفاع كياخد المساحة المتبقية أو الارتفاع الكامل حسب الرغبة */
+            min-height: calc(100vh - 56px);
             border: none;
             display: block;
         }
@@ -199,7 +192,8 @@
 </head>
 <body>
 
-    <header class="header-bar" id="mainHeader">
+    <!-- Main Renoxbet Header (Normal / Static) -->
+    <header class="header-bar">
         <div class="left-section">
             <a href="/" class="renox-logo">
                 <span class="part-reno">reno</span><span class="part-xbet">xbet</span>
@@ -227,30 +221,10 @@
         </div>
     </header>
 
+    <!-- Page Content Iframe -->
     <main>
-        <iframe src="Registration/index.html" class="content-frame" id="contentFrame"></iframe>
+        <iframe src="Registration/index.html" class="content-frame"></iframe>
     </main>
-
-    <script>
-        // كود JavaScript باش يراقب حركة السكرول داخل الصفحة الرئيسية أو الـ iframe
-        let lastScrollTop = 0;
-        const header = document.getElementById('mainHeader');
-
-        // ملاحظة: بما أن المحتوى داخل iframe، الطريقة المثلى هي استقبال أحداث السكرول من الـ iframe إذا كان في نفس الدومين (Same-Origin)
-        // أو مراقبة النافذة الرئيسية. هنا درنا مراقبة للنافذة الرئيسية:
-        window.addEventListener("scroll", function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > lastScrollTop && scrollTop > 50) {
-                // الهبوط لتحت (Scroll Down) -> خبي الهيدر
-                header.classList.add('header-hidden');
-            } else {
-                // الصعود لفوق (Scroll Up) -> بين الهيدر
-                header.classList.remove('header-hidden');
-            }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        }, false);
-    </script>
 
 </body>
 </html>
