@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renoxbet Header</title>
-    <!-- Google Font: Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -19,15 +17,15 @@
 
         body {
             background-color: #1a2332;
-            /* رجعنا البادينغ باش الهيدر في الأول ياخد بلاصتو وما يغطي والو */
-            padding-top: 56px; 
-            overflow: auto; 
+            padding-top: 56px; /* البادينغ القياسي باش الهيدر ياخد بلاصتو فالبداية */
+            margin: 0;
+            overflow-x: hidden;
         }
 
-        /* ----- Custom Header Renoxbet (Normal position, hides when scrolling down) ----- */
+        /* ----- Custom Header Renoxbet Integrated ----- */
         .header-bar {
             position: fixed;
-            top: 0; /* في الأول كيكون باين في بلاصتو الطبيعية */
+            top: 0;
             left: 0;
             background-color: #202d3d;
             display: flex;
@@ -38,12 +36,13 @@
             height: 56px;
             border-bottom: 1px solid #2a3a4e;
             z-index: 1000;
-            transition: top 0.3s ease-in-out; /* حركة سلسة باش يطلع للفوق ويختفي */
+            /* سلاسة تامة في الحركة بحال التطبيقات الكبرى */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* كلاس كيتزاد بالـ JS غير المستخدم كيهبط لتحت، باش الهيدر يهرب لفوق */
+        /* كلاس كيتزاد باش الهيدر يطلع لفوق ويختفي بسلاسة */
         .header-bar.header-hidden {
-            top: -60px;
+            transform: translateY(-100%);
         }
 
         .left-section, .right-section {
@@ -191,10 +190,10 @@
             white-space: nowrap;
         }
 
+        /* تنسيق الـ Iframe باش يغطي الشاشة بلا فراغات زرقاء زايدة */
         .content-frame {
             width: 100%;
-            height: auto;
-            min-height: 100vh;
+            height: 100vh;
             border: none;
             display: block;
         }
@@ -202,7 +201,6 @@
 </head>
 <body>
 
-    <!-- Main Renoxbet Header -->
     <header class="header-bar" id="mainHeader">
         <div class="left-section">
             <a href="/" class="renox-logo">
@@ -231,7 +229,6 @@
         </div>
     </header>
 
-    <!-- Page Content Iframe -->
     <main>
         <iframe src="Registration/index.html" class="content-frame" id="contentFrame"></iframe>
     </main>
@@ -242,15 +239,23 @@
         let lastScrollTop = 0;
 
         function handleScroll(scrollTop) {
-            // إيلا هبط المستخدم لتحت بأكثر من 20 بكسل، خبي الهيدر لفوق
-            if (scrollTop > lastScrollTop && scrollTop > 30) {
+            // إيلا كان فالفوق كاع (أقل من 10 بكسل)، ديما رده يبان
+            if (scrollTop <= 10) {
+                header.classList.remove('header-hidden');
+                lastScrollTop = scrollTop;
+                return;
+            }
+
+            // إيلا هبط المستخدم لتحت، خبي الهيدر
+            if (scrollTop > lastScrollTop) {
                 header.classList.add('header-hidden');
             } 
-            // إيلا طلع لفوق، رجع الهيدر يبان
-            else if (scrollTop < lastScrollTop) {
+            // إيلا طلع لفوق، رده يبان
+            else {
                 header.classList.remove('header-hidden');
             }
-            lastScrollTop = scrollTop;
+            
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         }
 
         // مراقبة السكرول في الصفحة الرئيسية
@@ -258,15 +263,16 @@
             handleScroll(window.pageYOffset || document.documentElement.scrollTop);
         });
 
-        // مراقبة السكرول داخل الـ Iframe
+        // مراقبة السكرول داخل الـ Iframe بسلاسة
         iframe.addEventListener('load', function() {
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                 iframeDoc.addEventListener('scroll', function() {
-                    handleScroll(iframeDoc.documentElement.scrollTop || iframeDoc.body.scrollTop);
+                    let st = iframeDoc.documentElement.scrollTop || iframeDoc.body.scrollTop;
+                    handleScroll(st);
                 });
             } catch (e) {
-                console.log("Cross-origin restriction active.");
+                console.log("Cross-origin restriction: Run via local server.");
             }
         });
     </script>
