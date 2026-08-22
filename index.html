@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renoxbet Header</title>
+    <!-- Google Font: Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -183,18 +185,19 @@
             white-space: nowrap;
         }
 
-        /* تنسيق الـ Iframe باش ياخد الواجهة كاملة وبدون حدود لتحت */
+        /* تنسيق الـ Iframe باش ياخد الارتفاع الحقيقي ديال الصفحة الداخلية وما يبقاش مقطوع */
         .content-frame {
             width: 100%;
-            height: 100vh;
+            height: auto;
+            min-height: 100vh;
             border: none;
             display: block;
-            background-color: #1a2332;
         }
     </style>
 </head>
 <body>
 
+    <!-- Main Renoxbet Header (Fixed) -->
     <header class="header-bar">
         <div class="left-section">
             <a href="/" class="renox-logo">
@@ -223,6 +226,7 @@
         </div>
     </header>
 
+    <!-- Page Content Iframe -->
     <main>
         <iframe src="Registration/index.html" class="content-frame"></iframe>
     </main>
