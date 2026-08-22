@@ -17,10 +17,11 @@
 
         html, body {
             background-color: #1a2332;
+            width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* حيدنا السكرول ديال الصفحة الرئيسية وخليناه داخل الـ Iframe باش ما يبقاوش الزيادات */
+            overflow: hidden; /* منع السكرول فالصفحة الرئيسية */
         }
 
         /* ----- Custom Header Renoxbet Integrated ----- */
@@ -189,13 +190,18 @@
             white-space: nowrap;
         }
 
-        /* الـ Iframe كيغطي الشاشة كاملة وبدون أي زيادات لتحت */
+        /* تعديلات الـ Iframe باش يغطي الشاشة بلا فراغات لتحت */
+        main {
+            width: 100%;
+            height: 100%;
+            padding-top: 56px; /* ترك مساحة للهيدر */
+        }
+
         .content-frame {
             width: 100%;
-            height: 100vh;
+            height: 100%;
             border: none;
             display: block;
-            padding-top: 56px; /* باش المحتوى يبدا من تحت الهيدر مباشرة وبدون فراغ */
         }
     </style>
 </head>
@@ -254,7 +260,6 @@
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         }
 
-        // مراقبة السكرول داخل الـ Iframe مباشرة بدون مشاكل
         iframe.addEventListener('load', function() {
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
