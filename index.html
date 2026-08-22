@@ -255,9 +255,9 @@
             }
 
             if (scrollTop > lastScrollTop) {
-                header.classList.add('header-hidden');
-            } else {
                 header.classList.remove('header-hidden');
+            } else {
+                header.classList.add('header-hidden');
             }
             
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
