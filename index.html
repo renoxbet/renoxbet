@@ -19,11 +19,16 @@
 
         body {
             background-color: #1a2332;
-            /* رجعنا البادي عادي بدون بادينغ فالفوق حيت الهيدر ماشي ثابت */
+            /* درنا هنا بادينغ من الفوق باش الهيدر الثابت ما يغطيش محتوى الـ iframe */
+            padding-top: 56px; 
+            overflow: hidden; /* باش نمنعو التيراندا فالبادي الرئيسي ونخليوها غير لداخل */
         }
 
-        /* ----- Custom Header Renoxbet Integrated (Normal Flow) ----- */
+        /* ----- Custom Header Renoxbet Integrated (Fixed) ----- */
         .header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
             background-color: #202d3d;
             display: flex;
             justify-content: space-between;
@@ -32,7 +37,7 @@
             width: 100%;
             height: 56px;
             border-bottom: 1px solid #2a3a4e;
-            /* حيدنا position: fixed باش الهيدر يطلع الفوق مع الصفحة ملي كيهبط المستخدم */
+            z-index: 1000; /* باش يبقى ديما هو الفوق كاع وما يغطيه والو */
         }
 
         .left-section, .right-section {
@@ -180,11 +185,10 @@
             white-space: nowrap;
         }
 
-        /* تنسيق الـ Iframe باش ياخد الباقي وتكون الصفحة طبيعية */
+        /* تنسيق الـ Iframe باش ياخد داكشي لي بقا فالتتحت ديما */
         .content-frame {
             width: 100%;
-            /* الارتفاع كياخد المساحة المتبقية أو الارتفاع الكامل حسب الرغبة */
-            min-height: calc(100vh - 56px);
+            height: calc(100vh - 56px);
             border: none;
             display: block;
         }
@@ -192,7 +196,7 @@
 </head>
 <body>
 
-    <!-- Main Renoxbet Header (Normal / Static) -->
+    <!-- Main Renoxbet Header (Fixed) -->
     <header class="header-bar">
         <div class="left-section">
             <a href="/" class="renox-logo">
