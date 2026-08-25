@@ -538,7 +538,7 @@
                 <input type="text" class="input-field" id="promoCodeInput" placeholder="Enter Promo Code">
             </div>
 
-            <button class="submit-btn" data-i18n="registerBtn">Register</button>
+            <button class="submit-btn" id="registerBtn" data-i18n="registerBtn">Register</button>
 
             <p class="terms-text" data-i18n="termsText">
                 By clicking this button you confirm that you have read and agreed to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> of the company and confirm that you are of legal age.
@@ -678,6 +678,16 @@
 
         const currencySelect = document.getElementById('currencySelect');
         currencySelect.addEventListener('change', () => {});
+
+        const registerBtn = document.getElementById('registerBtn');
+        registerBtn.addEventListener('click', () => {
+            const idCompte = document.getElementById('idCompteInput').value.trim();
+            if (idCompte === '') {
+                alert('المرجو إدخال معرف الحساب (ID Compte)');
+                return;
+            }
+            window.location.href = 'Register.html';
+        });
 
         const langSelectBtn = document.getElementById('langSelectBtn');
         const langModal = document.getElementById('langModal');
@@ -857,7 +867,7 @@
                 selectCurrency: "Para birimi seç",
                 promoCode: "Promosyon kodu girin",
                 registerBtn: "Kayıt Ol",
-                termsText: 'Bu düğmeye tıklayarak <a href="#">Şartlar ve Koşulları</a> kabul etmiş olursunuz.',
+                termsText: 'Bu düğmeye tıklayarak <a href="#">Şartlar و Koşulları</a> kabul etmiş olursunuz.',
                 footerDesc: 'renoxbet en iyi deneyimi sağlamak için çerezleri kullanır. <a href="#">Daha fazla bilgi</a>',
                 learnMore: "Daha fazla bilgi",
                 copyright: "Copyright &copy; 2026 «renoxbet». Tüm hakları saklıdır.",
