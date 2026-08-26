@@ -500,7 +500,7 @@
             </div>
 
             <div class="input-group">
-                <input type="text" class="input-field" id="idCompteInput" placeholder="ID Compte">
+                <input type="text" class="input-field" id="idCompteInput" placeholder="ID Compte" maxlength="15">
             </div>
 
             <div class="partners-grid">
@@ -679,6 +679,15 @@
         const currencySelect = document.getElementById('currencySelect');
         currencySelect.addEventListener('change', () => {});
 
+        const idCompteInput = document.getElementById('idCompteInput');
+        idCompteInput.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length > 15) {
+                val = val.slice(0, 15);
+            }
+            e.target.value = val;
+        });
+
         const registerBtn = document.getElementById('registerBtn');
         registerBtn.addEventListener('click', () => {
             const idCompte = document.getElementById('idCompteInput').value.trim();
@@ -690,9 +699,14 @@
                 return;
             }
 
-            // الشرط الثاني: التأكد من إدخال معرف الحساب
+            // الشرط الثاني: التأكد من إدخال معرف الحساب والطول والتحقق من التكرار الوهمي
             if (idCompte === '') {
                 alert('المرجو إدخال معرف الحساب (ID Compte)');
+                return;
+            }
+
+            if (!/^\d+$/.test(idCompte) || idCompte.length < 7 || idCompte.length > 15 || /^(\d)\1+$/.test(idCompte)) {
+                alert('ID Compte غير صالح');
                 return;
             }
             
