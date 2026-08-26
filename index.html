@@ -280,7 +280,7 @@
 
     <!-- Page Content Iframe -->
     <main>
-        <iframe id="myFrame" src="Registration/index.html" class="content-frame"></iframe>
+        <iframe id="myFrame" src="" class="content-frame"></iframe>
     </main>
 
     <script>
@@ -302,9 +302,31 @@
             showHeader('register');
         }
 
-        // عند فتح الصفحة لأول مرة (مثلاً تبدأ بالهيدر الرئيسي)
+        // مراقبة النقر داخل الـ iframe أو التنقل لصفحة Register تلقائياً
         window.onload = function() {
-            showHeader('main'); 
+            const iframe = document.getElementById('myFrame');
+            iframe.src = 'Registration/index.html';
+            showHeader('main');
+
+            iframe.onload = function() {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (iframeDoc) {
+                        iframeDoc.addEventListener('click', function(e) {
+                            const target = e.target.closest('button, a, input[type="submit"], input[type="button"]');
+                            if (target) {
+                                const text = target.innerText || target.value || '';
+                                if (text.toLowerCase().includes('register') || text.includes('تسجيل')) {
+                                    iframe.src = 'Registration/Register.html';
+                                    showHeader('register');
+                                }
+                            }
+                        });
+                    }
+                } catch (err) {
+                    // تجاهل قيود الأمان في حال كان الـ iframe في نطاق مختلف
+                }
+            };
         }
     </script>
 </body>
