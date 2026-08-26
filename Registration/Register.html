@@ -1,988 +1,873 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select language</title>
-    <!-- Google Font: Roboto -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>new/fr/office/recharge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --header-height: 56px;
+      --exact-dark-blue: #17212e;
+      --section-bg: #f4f6f9;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--section-bg);
+      color: #333;
+      overflow-x: hidden;
+    }
+    /* منع تحرك الصفحة في الخلفية عند فتح المودال */
+    body.modal-open {
+      overflow: hidden;
+      height: 100vh;
+    }
+    header {
+      height: var(--header-height);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid #dcdce2;
+      position: relative;
+    }
+    .back-btn, .refresh-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      transition: transform 0.15s ease;
+    }
+    .back-btn:active, .refresh-btn:active {
+      transform: scale(0.9);
+    }
+    .refresh-btn svg, .back-btn svg {
+      width: 23px;
+      height: 23px;
+      fill: none;
+      stroke: #4a5568;
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .refresh-btn.is-loading svg {
+      animation: smooth-spin 0.6s linear infinite;
+    }
+    @keyframes smooth-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .header-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #59576a;
+      white-space: nowrap;
+    }
+    .account-info {
+      background-color: #ffffff;
+      padding: 24px 16px 16px 16px;
+    }
+    .account-number-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      position: relative;
+      direction: ltr;
+      justify-content: flex-start;
+    }
+    .account-number {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #222;
+      letter-spacing: 0.5px;
+    }
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease;
+    }
+    .copy-btn:active {
+      transform: scale(0.9);
+    }
+    .copy-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: #17212e;
+    }
+    .copied-tooltip {
+      position: absolute;
+      left: 140px;
+      background: #ffffff;
+      color: #007aff;
+      border: 1px solid #d1d1d6;
+      padding: 3px 12px;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
+    }
+    .copied-tooltip.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .instruction {
+      font-size: 1rem;
+      background-color: var(--exact-dark-blue);
+      color: #fff;
+      padding: 12px 16px;
+      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 12px;
+      text-align: left;
+      direction: ltr;
+      width: 100%;
+      max-width: 500px;
+    }
+    .telegram-banner {
+      background-color: #e2e2e6;
+      padding: 14px 16px;
+      direction: rtl;
+      text-align: right;
+      border-top: 1px solid #d1d1d6;
+      border-bottom: 1px solid #d1d1d6;
+      margin-top: 8px;
+    }
+    .telegram-text {
+      font-size: 0.9rem;
+      color: #333;
+      line-height: 1.6;
+    }
+    .telegram-link {
+      display: block;
+      color: #007bff;
+      font-weight: bold;
+      font-size: 0.9rem;
+      direction: ltr;
+      text-align: right;
+      text-decoration: underline;
+      margin-top: 4px;
+    }
+    .section-divider {
+      width: 100%;
+      height: 12px;
+      background-color: #f4f6f9;
+      border: none;
+      margin: 0;
+    }
+    .bank-section {
+      background-color: var(--section-bg);
+      padding: 16px 0;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 14px;
+      color: #59576a;
+      font-size: 0.9rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .bank-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .bank-card {
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid #e1e0eb;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .bank-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(8, 11, 61, 0.12);
+    }
+    .logo-space {
+      height: 68px;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+    .logo-space img {
+      max-height: 28px;
+      max-width: 90%;
+      object-fit: contain;
+    }
+    .bank-card-name {
+      height: 42px;
+      background: var(--exact-dark-blue);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 4px;
+    }
 
-        body {
-            background-color: #1a2332;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 480px;
-            background-color: #17212e;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        .title-bar {
-            background-color: #202d3d;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #2a3a4e;
-        }
-
-        .title-bar h2 {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .back-btn {
-            background-color: #2b5278;
-            color: #fff;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .content-card {
-            background-color: #eef2f5;
-            color: #333;
-            margin: 15px;
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        /* TABS DESIGN - INTERACTIVE */
-        .tabs {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .tab-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .tab-icon-box {
-            width: 100%;
-            height: 52px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            margin-bottom: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .tab-icon-box svg {
-            width: 22px;
-            height: 22px;
-            fill: #2b629d;
-            transition: fill 0.2s ease;
-        }
-
-        /* Active Tab State */
-        .tab-item.active .tab-icon-box {
-            background-color: #2b629d;
-        }
-
-        .tab-item.active .tab-icon-box svg {
-            fill: #ffffff;
-        }
-
-        .tab-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #2b629d;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid #d1d5db;
-            background-color: #ffffff;
-            font-size: 14px;
-            outline: none;
-            text-align: left;
-        }
-
-        .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .partner-card {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 12px 5px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .partner-card.selected {
-            border-color: #2b629d;
-            background-color: #f0f4f8;
-            box-shadow: 0 0 8px rgba(43, 98, 157, 0.3);
-        }
-
-        .partner-card span {
-            font-size: 12px;
-            color: #444;
-            font-weight: 600;
-        }
-
-        .select-group {
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .select-field {
-            width: 100%;
-            padding: 14px 15px 8px 15px;
-            border-radius: 8px;
-            border: 1px solid #d1d5db;
-            background-color: #ffffff;
-            font-size: 14px;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            color: #2b629d;
-            font-weight: 500;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .select-label-top {
-            position: absolute;
-            top: 6px;
-            left: 15px;
-            font-size: 10px;
-            color: #666;
-            pointer-events: none;
-            font-weight: 400;
-        }
-
-        .select-group::after {
-            content: '\f107';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #2b629d;
-            pointer-events: none;
-            font-size: 14px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background-color: #a3cc76;
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 12px;
-            transition: background 0.2s;
-        }
-
-        .submit-btn:hover {
-            background-color: #92b868;
-        }
-
-        .terms-text {
-            font-size: 11px;
-            color: #666;
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        .terms-text a {
-            color: #2b629d;
-            text-decoration: underline;
-        }
-
-        .footer {
-            margin-top: auto;
-            padding: 15px;
-            font-size: 11px;
-            color: #8a9cb0;
-            text-align: center;
-        }
-
-        .footer-desc {
-            line-height: 1.5;
-            margin-bottom: 10px;
-        }
-
-        .footer-desc a {
-            color: #3b82f6;
-            text-decoration: underline;
-        }
-
-        .copyright {
-            margin-bottom: 15px;
-            color: #a0aec0;
-        }
-
-        .bottom-actions {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .action-btn {
-            flex: 1;
-            background-color: #244163;
-            border: 1px solid #31547f;
-            border-radius: 8px;
-            padding: 10px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .support-btn {
-            flex: 2;
-        }
-
-        .support-info {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .support-info span:first-child {
-            font-weight: 700;
-            font-size: 13px;
-        }
-
-        .support-info span:last-child {
-            font-size: 10px;
-            color: #a0aec0;
-        }
-
-        .app-banner {
-            background: linear-gradient(135deg, #1d6aa3, #154973);
-            border-radius: 8px;
-            padding: 12px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #fff;
-        }
-
-        .app-title {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .app-icons {
-            display: flex;
-            gap: 12px;
-            font-size: 18px;
-        }
-
-        /* Language Modal Overlay Styles */
-        .lang-modal {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #17212e;
-            z-index: 999;
-            flex-direction: column;
-        }
-
-        .lang-modal.open {
-            display: flex;
-        }
-
-        .lang-header {
-            background-color: #202d3d;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 1px solid #2a3a4e;
-        }
-
-        .lang-header h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .lang-search-box {
-            padding: 15px 15px 5px 15px;
-            background-color: #17212e;
-        }
-
-        .lang-search-input {
-            width: 100%;
-            padding: 10px 15px 10px 38px;
-            border-radius: 8px;
-            border: 1px solid #2a3a4e;
-            background-color: #202d3d;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .lang-search-wrapper {
-            position: relative;
-        }
-
-        .lang-search-wrapper i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #8a9cb0;
-            font-size: 14px;
-        }
-
-        .lang-list {
-            padding: 10px 15px 15px 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            overflow-y: auto;
-        }
-
-        .lang-item {
-            background-color: #202d3d;
-            padding: 12px 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            color: #fff;
-            font-size: 14px;
-            border: 1px solid #2a3a4e;
-        }
-
-        .lang-item:hover {
-            background-color: #2b415e;
-        }
-
-        /* Circular Country Flags Styling */
-        .lang-flag {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 15px;
-            flex-shrink: 0;
-            box-shadow: 0 0 2px rgba(0,0,0,0.5);
-        }
-
-        /* Support RTL direction when Arabic is selected */
-        [dir="rtl"] .lang-flag {
-            margin-right: 0;
-            margin-left: 15px;
-        }
-
-        [dir="rtl"] .lang-code {
-            margin-left: 15px;
-        }
-
-        .lang-code {
-            color: #8a9cb0;
-            font-weight: 500;
-            width: 35px;
-            margin-right: 15px;
-        }
-
-        .lang-divider {
-            color: #2a3a4e;
-            margin-right: 15px;
-        }
-
-        .lang-name {
-            color: #fff;
-            font-weight: 400;
-        }
-    </style>
+    /* تصميم النافذة المنبثقة Modal */
+    .cashplus-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      padding: 16px;
+    }
+    .cashplus-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .cashplus-modal-content {
+      background: #ffffff;
+      width: 100%;
+      max-width: 390px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 3px;
+      position: relative;
+      box-shadow: 0 12px 35px rgba(8, 16, 211, 0.2);
+      direction: ltr;
+      text-align: left;
+      color: #0d1b3e;
+      transform: scale(0.92) translateY(10px);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .cashplus-modal-overlay.active .cashplus-modal-content {
+      transform: scale(1) translateY(0);
+    }
+    .modal-header-container {
+      background-color: #ffffff;
+      padding: 20px 20px 16px 20px;
+      text-align: center;
+      position: relative;
+    }
+    .payment-cell__img {
+      height: 42px;
+      object-fit: contain;
+      display: inline-block;
+    }
+    .modal-payment__close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      opacity: 0.3;
+      transition: opacity 0.2s ease;
+    }
+    .modal-payment__close:hover {
+      opacity: 0.7;
+    }
+    .modal-payment__close::before,
+    .modal-payment__close::after {
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: 1px;
+      width: 18px;
+      height: 2px;
+      background-color: #555555;
+    }
+    .modal-payment__close::before { transform: rotate(45deg); }
+    .modal-payment__close::after { transform: rotate(-45deg); }
+    .payment_modal_body {
+      padding: 18px;
+      background: #ffffff;
+    }
+    .notice-text {
+      font-size: 14.5px;
+      color: #0d1b3e;
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+    .info-line {
+      font-size: 14.5px;
+      color: #0d1b3e;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .info-line strong { font-weight: 700; }
+    .copy-btn-custom {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-left: 2px;
+      background: none;
+      border: none;
+    }
+    .copy-btn-custom svg {
+      width: 18px;
+      height: 18px;
+      fill: #17212e;
+    }
+    .toast-copied {
+      font-size: 12px;
+      color: #28a745;
+      font-weight: 600;
+      display: none;
+      margin-left: 4px;
+    }
+    .form-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .field-label {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0d1b3e;
+      flex: 1;
+      text-align: left;
+    }
+    .field-sublabel {
+      font-size: 11px;
+      color: #7b8896;
+      margin-top: 3px;
+    }
+    .input-control {
+      width: 175px;
+      height: 34px;
+      border: 1px solid #b2c0ce;
+      border-radius: 2px;
+      padding: 0 8px;
+      font-size: 14px;
+      background: #ffffff;
+      outline: none;
+      color: #0d1b3e;
+    }
+    .input-control.amount {
+      text-align: center;
+    }
+    .upload-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .file-preview-card {
+      width: 58px;
+      height: 58px;
+      border: 1px solid #b2c0ce;
+      border-radius: 2px;
+      overflow: hidden;
+      background: #ffffff;
+      display: none;
+      position: relative;
+    }
+    .file-preview-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .remove-file-btn {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 18px;
+      height: 18px;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .upload-box-custom {
+      width: 58px;
+      height: 58px;
+      background-color: #c4cad1;
+      border: 2px solid #ffffff;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 30px;
+      color: #ffffff;
+    }
+    .btn-confirm {
+      width: 100%;
+      height: 44px;
+      background-color: #28a745;
+      color: #ffffff;
+      border: none;
+      border-radius: 2px;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 14px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <!-- Title Bar -->
-        <div class="title-bar">
-            <button class="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
-            <h2 id="pageTitle">Registration</h2>
-        </div>
-
-        <div class="content-card">
-            <!-- TABS -->
-            <div class="tabs">
-                <div class="tab-item active">
-                    <div class="tab-icon-box">
-                        <svg viewBox="0 0 11 15"><path d="M10 5.5l-.2-.1H6.6L9.8 1V.8H4.9l-4 7v.3h3l-3 6.3v.3h.4l8.7-9c.1 0 .1-.1 0-.2z"></path></svg>
-                    </div>
-                    <span class="tab-label" data-i18n="oneClick">One-click</span>
-                </div>
-
-                <div class="tab-item">
-                    <div class="tab-icon-box">
-                        <svg viewBox="0 0 32 32"><path d="M19.3 7.3c1.5.9 2.6 2.4 2.8 4.3.6.3 1.2.5 2 .5a4.7 4.7 0 000-9.3c-2.7-.1-4.8 2-4.8 4.5zm-3 9.6c2.6 0 4.6-2.2 4.6-4.7s-2.1-4.7-4.6-4.7-4.7 2.2-4.7 4.7 2 4.7 4.7 4.7zm1.9.3h-4a6 6 0 00-6 6v5h.3c3.2 1 6 1.4 8.2 1.4 4.4 0 7-1.3 7.2-1.3l.3-.2v-4.8a6 6 0 00-6-6.1zm7.8-4.8h-4c0 1.6-.7 3-1.7 4 2.9.9 5 3.6 5 6.9v1.5c4-.1 6.2-1.3 6.3-1.3l.3-.2h.1v-4.8a6 6 0 00-6-6.1zm-18-.3c1 0 1.8-.3 2.5-.8.2-1.5 1-2.8 2.2-3.7v-.3a4.7 4.7 0 00-9.3 0c0 2.6 2 4.8 4.6 4.8zm4.2 4.3c-1-1-1.7-2.5-1.8-4H6a6 6 0 00-6 6v5h.3c2.6.9 4.8 1.2 6.8 1.3v-1.4c0-3.3 2.2-6 5.1-6.9z"></path></svg>
-                    </div>
-                    <span class="tab-label" data-i18n="socialNetworks">Social networks</span>
-                </div>
-
-                <div class="tab-item">
-                    <div class="tab-icon-box">
-                        <svg viewBox="0 0 32 32"><path d="M16 20.7l-4-3.5L.8 26.9c.4.4 1 .6 1.6.6h27.4c.6 0 1.2-.2 1.6-.6L20 17.2l-4 3.5z"></path><path d="M31.3 5.3c-.4-.4-1-.6-1.6-.6H2.3c-.6 0-1.2.2-1.6.6L16 18.4 31.3 5.3zM0 6.7v19l11-9.4zM21 16.3l11 9.4v-19z"></path></svg>
-                    </div>
-                    <span class="tab-label" data-i18n="byEmail">By e-mail</span>
-                </div>
-
-                <div class="tab-item">
-                    <div class="tab-icon-box">
-                        <svg viewBox="0 0 10 15"><path d="M8.7.7h-7C1 .7.4 1.1.4 1.7v12c0 .6.5 1 1.1 1h7.1c.6 0 1.1-.4 1.1-1v-12c0-.6-.5-1-1-1zM4 1.4h2.3l.1.1v.1H4v-.2zm1.2 12.8c-.3 0-.6-.2-.6-.4 0-.3.3-.5.6-.5s.5.2.5.5c0 .2-.2.4-.5.4zM9 13H1.3V2.2H9V13z"></path></svg>
-                    </div>
-                    <span class="tab-label" data-i18n="byPhone">By phone</span>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <input type="text" class="input-field" id="idCompteInput" placeholder="ID Compte" maxlength="15">
-            </div>
-
-            <div class="partners-grid">
-                <div class="partner-card" data-partner="Melbet">
-                    <strong style="color: #000; font-size: 14px;">MEL<span style="color: #f5a623;">BET</span></strong>
-                    <span>Melbet</span>
-                </div>
-                <div class="partner-card" data-partner="MegaPari">
-                    <strong style="color: #000; font-size: 12px; letter-spacing: -0.5px;">MEGA:PARI</strong>
-                    <span>MegaPari</span>
-                </div>
-                <div class="partner-card" data-partner="LineBet">
-                    <strong style="color: #000; font-size: 13px;">LINE<span style="color: green;">BET</span></strong>
-                    <span>LineBet</span>
-                </div>
-                <div class="partner-card" data-partner="1xbet">
-                    <strong style="font-size: 14px;"><span style="color: #234b7e;">1x</span><span style="color: #234b7e;">BET</span></strong>
-                    <span>1xbet</span>
-                </div>
-                <div class="partner-card" data-partner="Gooobet">
-                    <strong style="color: #000; font-size: 13px;">goo<span style="color: #0f4c81;">bet</span></strong>
-                    <span>Gooobet</span>
-                </div>
-            </div>
-
-            <div class="select-group">
-                <span class="select-label-top" data-i18n="selectCurrency">Select currency</span>
-                <select class="select-field" id="currencySelect">
-                    <option value="MAD" selected>MAD (Moroccan dirham)</option>
-                    <option value="USD">USD (US dollar)</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <input type="text" class="input-field" id="promoCodeInput" placeholder="Enter Promo Code">
-            </div>
-
-            <button class="submit-btn register-btn" id="registerBtn" data-i18n="registerBtn">Register</button>
-
-            <p class="terms-text" data-i18n="termsText">
-                By clicking this button you confirm that you have read and agreed to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> of the company and confirm that you are of legal age.
-            </p>
-        </div>
-
-        <footer class="footer">
-            <p class="footer-desc" data-i18n="footerDesc">
-                renoxbet uses cookies to ensure you get the best experience. By remaining on the website, you consent to the use of your cookies on renoxbet. <a href="#" data-i18n="learnMore">Learn more</a>
-            </p>
-            <p class="copyright" data-i18n="copyright">
-                Copyright &copy; 2026 «renoxbet». All rights reserved and protected by law.
-            </p>
-
-            <div class="bottom-actions">
-                <button class="action-btn support-btn">
-                    <i class="fa-solid fa-headset" style="font-size: 24px; color: #62b5e5;"></i>
-                    <div class="support-info">
-                        <span data-i18n="supportTitle">Support 24/7</span>
-                        <span data-i18n="supportDesc">Ask any question</span>
-                    </div>
-                </button>
-                <button class="action-btn" id="langSelectBtn">
-                    <span id="currentLangText" style="display: flex; align-items: center; gap: 6px;">EN <img src="https://flagcdn.com/w40/gb.png" class="lang-flag" style="margin: 0; width: 18px; height: 18px;"></span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </button>
-            </div>
-
-            <div class="app-banner">
-                <div style="text-align: left;">
-                    <div class="app-title"><span style="color: #ffffff;">reno</span><span style="color: #f5a623;">xbet</span></div>
-                    <div style="font-size: 11px;" data-i18n="mobileApp">Mobile Application</div>
-                </div>
-                <div class="app-icons">
-                    <i class="fa-brands fa-android"></i>
-                    <i class="fa-brands fa-apple"></i>
-                </div>
-            </div>
-        </footer>
-
-        <!-- Language Page/Modal Overlay -->
-        <div class="lang-modal" id="langModal">
-            <div class="lang-header">
-                <button class="back-btn" id="closeLangModal"><i class="fa-solid fa-arrow-left"></i></button>
-                <h2 data-i18n="selectLanguageTitle">Select language</h2>
-            </div>
-            <div class="lang-search-box">
-                <div class="lang-search-wrapper">
-                    <i class="fa-solid fa-search"></i>
-                    <input type="text" class="lang-search-input" id="langSearchInput" placeholder="Search">
-                </div>
-            </div>
-            <div class="lang-list" id="langList">
-                <div class="lang-item" data-lang="AR" data-code="AR" data-flag="https://flagcdn.com/w40/ma.png" data-name="العربية">
-                    <img src="https://flagcdn.com/w40/ma.png" class="lang-flag" alt="AR">
-                    <span class="lang-code">AR</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">العربية</span>
-                </div>
-                <div class="lang-item" data-lang="FR" data-code="FR" data-flag="https://flagcdn.com/w40/fr.png" data-name="Français">
-                    <img src="https://flagcdn.com/w40/fr.png" class="lang-flag" alt="FR">
-                    <span class="lang-code">FR</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">Français</span>
-                </div>
-                <div class="lang-item" data-lang="EN" data-code="EN" data-flag="https://flagcdn.com/w40/gb.png" data-name="English">
-                    <img src="https://flagcdn.com/w40/gb.png" class="lang-flag" alt="EN">
-                    <span class="lang-code">EN</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">English</span>
-                </div>
-                <div class="lang-item" data-lang="ES" data-code="ES" data-flag="https://flagcdn.com/w40/es.png" data-name="Español">
-                    <img src="https://flagcdn.com/w40/es.png" class="lang-flag" alt="ES">
-                    <span class="lang-code">ES</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">Español</span>
-                </div>
-                <div class="lang-item" data-lang="DE" data-code="DE" data-flag="https://flagcdn.com/w40/de.png" data-name="Deutsch">
-                    <img src="https://flagcdn.com/w40/de.png" class="lang-flag" alt="DE">
-                    <span class="lang-code">DE</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">Deutsch</span>
-                </div>
-                <div class="lang-item" data-lang="IT" data-code="IT" data-flag="https://flagcdn.com/w40/it.png" data-name="Italiano">
-                    <img src="https://flagcdn.com/w40/it.png" class="lang-flag" alt="IT">
-                    <span class="lang-code">IT</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">Italiano</span>
-                </div>
-                <div class="lang-item" data-lang="RU" data-code="RU" data-flag="https://flagcdn.com/w40/ru.png" data-name="Русский">
-                    <img src="https://flagcdn.com/w40/ru.png" class="lang-flag" alt="RU">
-                    <span class="lang-code">RU</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">Русский</span>
-                </div>
-                <div class="lang-item" data-lang="PT" data-code="PT" data-flag="https://flagcdn.com/w40/pt.png" data-name="Português">
-                    <img src="https://flagcdn.com/w40/pt.png" class="lang-flag" alt="PT">
-                    <span class="lang-code">PT</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">Português</span>
-                </div>
-                <div class="lang-item" data-lang="TR" data-code="TR" data-flag="https://flagcdn.com/w40/tr.png" data-name="Türkçe">
-                    <img src="https://flagcdn.com/w40/tr.png" class="lang-flag" alt="TR">
-                    <span class="lang-code">TR</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">Türkçe</span>
-                </div>
-                <div class="lang-item" data-lang="CN" data-code="CN" data-flag="https://flagcdn.com/w40/cn.png" data-name="汉语">
-                    <img src="https://flagcdn.com/w40/cn.png" class="lang-flag" alt="CN">
-                    <span class="lang-code">CN</span>
-                    <span class="lang-divider">|</span>
-                    <span class="lang-name">汉语</span>
-                </div>
-            </div>
-        </div>
+<div class="cashplus-modal-overlay" id="paymentModal">
+  <div class="cashplus-modal-content" id="modalContentBox">
+    <div class="modal-header-container">
+      <span class="modal-payment__close" id="modalCloseBtn"></span>
+      <img id="modalBankImg" src="" alt="Bank Logo" class="payment-cell__img">
     </div>
 
-    <!-- JavaScript لتفعيل التنقل وتغيير اللغات والعلامات -->
-    <script>
-        const tabs = document.querySelectorAll('.tab-item');
+    <div class="payment_modal_body" id="modalBodyContent">
+      <form id="depositForm">
+        <div class="notice-text">
+          Avant de créer une demande, transférez les fonds dans un délai de 10 minutes en utilisant les informations de paiement fournies ci-dessous.
+        </div>
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-            });
-        });
+        <div class="info-line">
+          <strong id="modalBeneficiaryTitle">Cash plus</strong> 
+          <span class="value-text" id="modalBeneficiaryName">0702768353</span>
+          <button type="button" class="copy-btn-custom" onclick="copyData(document.getElementById('modalBeneficiaryName').textContent, this)">
+            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          </button>
+          <span class="toast-copied">Copié</span>
+        </div>
 
-        const partners = document.querySelectorAll('.partner-card');
+        <div class="info-line" style="margin-bottom: 12px;">
+          <strong id="modalAccountTitle">Motif</strong> 
+          <span class="value-text" id="modalAccountNumber">Ecom</span>
+          <button type="button" class="copy-btn-custom" onclick="copyData(document.getElementById('modalAccountNumber').textContent, this)">
+            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          </button>
+          <span class="toast-copied">Copié</span>
+        </div>
 
-        partners.forEach(partner => {
-            partner.addEventListener('click', () => {
-                partners.forEach(p => p.classList.remove('selected'));
-                partner.classList.add('selected');
-            });
-        });
+        <div id="cashplus-instruction-img" style="margin: 12px auto; text-align: center; display: none; max-width: 210px;">
+          <img src="https://i.ibb.co/XZcBdhjx/IMG-1474.jpg" alt="طريقة الإرسال عبر كاش بلوس" style="width: 100%; height: auto; max-height: 230px; object-fit: contain; border-radius: 4px; border: 1px solid #d1d1d6; background: #fff; padding: 2px;" />
+        </div>
 
-        const currencySelect = document.getElementById('currencySelect');
-        currencySelect.addEventListener('change', () => {});
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="field-label">Montant (Min 50.00 MAD / Max 20 000.00 MAD):</div>
+            <input id="amount" name="amount" class="input-control amount" type="text" value="50.00">
+          </div>
 
-        const idCompteInput = document.getElementById('idCompteInput');
-        idCompteInput.addEventListener('input', (e) => {
-            let val = e.target.value.replace(/\D/g, '');
-            if (val.length > 15) {
-                val = val.slice(0, 15);
-            }
-            e.target.value = val;
-        });
+          <div class="form-row">
+            <div class="field-label">رقم الحساب البنكي:</div>
+            <input type="text" name="_iban" id="_iban" class="input-control">
+          </div>
 
-        const registerBtn = document.getElementById('registerBtn');
-        registerBtn.addEventListener('click', () => {
-            const idCompte = document.getElementById('idCompteInput').value.trim();
-            const selectedPartner = document.querySelector('.partner-card.selected');
+          <div class="form-row">
+            <div class="field-label">الاسم كاملا:</div>
+            <input type="text" name="الاسم_كاملا" id="الاسم_كاملا" class="input-control">
+          </div>
 
-            // الشرط الأول: التأكد من اختيار منصة
-            if (!selectedPartner) {
-                alert('المرجو اختيار إحدى المنصات أولاً');
-                return;
-            }
+          <div class="form-row" style="align-items: flex-start;">
+            <div class="field-label">
+              من فضلك قم بتحميل الاسكرين شوت لعمليه التحويل الناجحه:
+              <div class="field-sublabel">(.jpg, .jpeg, .png, .pdf)</div>
+            </div>
+            <div class="upload-container">
+              <div class="file-preview-card" id="file_preview_card">
+                <img id="preview_img" src="" alt="Preview">
+                <div class="remove-file-btn" onclick="removeFile(event)">×</div>
+              </div>
+              <div class="upload-box-custom" onclick="document.getElementById('real_file_input').click()">
+                +
+                <input type="file" id="real_file_input" style="display:none;" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileSelect(this)">
+              </div>
+            </div>
+          </div>
+        </div>
 
-            // الشرط الثاني: التأكد من إدخال معرف الحساب والطول والتحقق من التكرار الوهمي
-            if (idCompte === '') {
-                alert('المرجو إدخال معرف الحساب (ID Compte)');
-                return;
-            }
+        <button type="submit" class="btn-confirm" id="deposit_button">CONFIRMER</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-            if (!/^\d+$/.test(idCompte) || idCompte.length < 7 || idCompte.length > 15 || /^(\d)\1+$/.test(idCompte)) {
-                alert('ID Compte غير صالح');
-                return;
-            }
-            
-            // إرسال إشارة للهيدر الفوقاني باش يتغير
-            if (window.parent && window.parent.showHeader) {
-                window.parent.showHeader('register');
-            }
+<header>
+  <button class="refresh-btn" id="refresh-btn"><svg viewBox="0 0 24 24"><path d="M21.5 2v6h-6"></path><path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.23-5.19"></path></svg></button>
+  <div class="header-title">Dépôts sur un compte</div>
+  <button class="back-btn" id="back-btn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+</header>
 
-            // الانتقال للصفحة الثانية مع إرسال الآيدي في الرابط
-            window.location.href = `Register.html?userId=${encodeURIComponent(idCompte)}`;
-        });
+<main>
+  <div class="account-info">
+    <div class="account-number-wrapper">
+      <div class="account-number">DÉPÔT <span id="account-number">0000000000</span></div>
+      <button class="copy-btn" id="copy-btn"><svg viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 5 6 5.9 6 7v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
+      <span class="copied-tooltip" id="copied-tooltip">Copié</span>
+    </div>
+    <div class="instruction">Types de systèmes de paiement</div>
+    <div class="telegram-banner">
+      <div class="telegram-text">
+        إذا تأخر الدفع بعد إرسال الأموال ، يرجى التواصل مع الدعم التقني عبر البريد الالكتروني
+        <a href="mailto:processing-morocco@1xbet-team.com" class="telegram-link">processing-morocco@1xbet-team.com</a>
+      </div>
+    </div>
+  </div>
 
-        const langSelectBtn = document.getElementById('langSelectBtn');
-        const langModal = document.getElementById('langModal');
-        const closeLangModal = document.getElementById('closeLangModal');
-        const currentLangText = document.getElementById('currentLangText');
-        const langItems = document.querySelectorAll('.lang-item');
-        const langSearchInput = document.getElementById('langSearchInput');
+  <div class="section-divider"></div>
 
-        const translations = {
-            EN: {
-                pageTitle: "Registration",
-                oneClick: "One-click",
-                socialNetworks: "Social networks",
-                byEmail: "By e-mail",
-                byPhone: "By phone",
-                idCompte: "ID Compte",
-                selectCurrency: "Select currency",
-                promoCode: "Enter Promo Code",
-                registerBtn: "Register",
-                termsText: 'By clicking this button you confirm that you have read and agreed to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> of the company and confirm that you are of legal age.',
-                footerDesc: 'renoxbet uses cookies to ensure you get the best experience. By remaining on the website, you consent to the use of your cookies on renoxbet. <a href="#">Learn more</a>',
-                learnMore: "Learn more",
-                copyright: "Copyright &copy; 2026 «renoxbet». All rights reserved and protected by law.",
-                supportTitle: "Support 24/7",
-                supportDesc: "Ask any question",
-                mobileApp: "Mobile Application",
-                selectLanguageTitle: "Select language",
-                searchPlaceholder: "Search"
-            },
-            FR: {
-                pageTitle: "Inscription",
-                oneClick: "En un clic",
-                socialNetworks: "Réseaux sociaux",
-                byEmail: "Par e-mail",
-                byPhone: "Par téléphone",
-                idCompte: "ID Compte",
-                selectCurrency: "Sélectionner la devise",
-                promoCode: "Entrer le code promo",
-                registerBtn: "S'inscrire",
-                termsText: 'En cliquant sur ce bouton, vous confirmez avoir lu et accepté les <a href="#">Termes et conditions</a> et la <a href="#">Politique de confidentialité</a> de l\'entreprise et confirmez que vous êtes majeur.',
-                footerDesc: 'renoxbet utilise des cookies pour vous garantir la meilleure expérience. En restant sur le site, vous consentez à l\'utilisation de vos cookies sur renoxbet. <a href="#">En savoir plus</a>',
-                learnMore: "En savoir plus",
-                copyright: "Copyright &copy; 2026 «renoxbet». Tous droits réservés et protégés par la loi.",
-                supportTitle: "Support 24/7",
-                supportDesc: "Posez vos questions",
-                mobileApp: "Application Mobile",
-                selectLanguageTitle: "Choisir la langue",
-                searchPlaceholder: "Rechercher"
-            },
-            AR: {
-                pageTitle: "التسجيل",
-                oneClick: "بنقرة واحدة",
-                socialNetworks: "شبكات التواصل",
-                byEmail: "عبر البريد",
-                byPhone: "عبر الهاتف",
-                idCompte: "معرف الحساب",
-                selectCurrency: "اختر العملة",
-                promoCode: "أدخل رمز البرومو",
-                registerBtn: "تسجيل",
-                termsText: 'بالضغط على هذا الزر فإنك تؤكد قراءتك وموافقتك على <a href="#">الشروط والأحكام</a> و <a href="#">سياسة الخصوصية</a> للشركة وتؤكد أنك بالغ السن القانوني.',
-                footerDesc: 'تستخدم renoxbet ملفات تعريف الارتباط لضمان حصولك على أفضل تجربة. بقاؤك على الموقع يوافق على استخدام ملفات تعريف الارتباط. <a href="#">اعرف المزيد</a>',
-                learnMore: "اعرف المزيد",
-                copyright: "حقوق النشر &copy; 2026 «renoxbet». جميع الحقوق محفوظة ومحمية بالقانون.",
-                supportTitle: "الدعم 24/7",
-                supportDesc: "اطرح أي سؤال",
-                mobileApp: "التطبيق المحمول",
-                selectLanguageTitle: "اختر اللغة",
-                searchPlaceholder: "بحث"
-            },
-            ES: {
-                pageTitle: "Registro",
-                oneClick: "Un clic",
-                socialNetworks: "Redes sociales",
-                byEmail: "Por correo",
-                byPhone: "Por teléfono",
-                idCompte: "ID de cuenta",
-                selectCurrency: "Seleccionar moneda",
-                promoCode: "Ingrese código promocional",
-                registerBtn: "Registrarse",
-                termsText: 'Al hacer clic en este botón, confirma que ha leído y aceptado los <a href="#">Términos y condiciones</a> y la <a href="#">Política de privacidad</a> de la empresa y confirma que es mayor de edad.',
-                footerDesc: 'renoxbet utiliza cookies para garantizarle la mejor experiencia. Al permanecer en el sitio web, usted alcienta el uso de cookies. <a href="#">Más información</a>',
-                learnMore: "Más información",
-                copyright: "Copyright &copy; 2026 «renoxbet». Todos los derechos reservados y protegidos por ley.",
-                supportTitle: "Soporte 24/7",
-                supportDesc: "Hacer cualquier pregunta",
-                mobileApp: "Aplicación móvil",
-                selectLanguageTitle: "Seleccionar idioma",
-                searchPlaceholder: "Buscar"
-            },
-            DE: {
-                pageTitle: "Registrierung",
-                oneClick: "Mit einem Klick",
-                socialNetworks: "Soziale Netzwerke",
-                byEmail: "Per E-Mail",
-                byPhone: "Per Telefon",
-                idCompte: "Konto-ID",
-                selectCurrency: "Währung wählen",
-                promoCode: "Gutscheincode eingeben",
-                registerBtn: "Registrieren",
-                termsText: 'Durch das Klicken auf diesen Button bestätigen Sie, dass Sie die <a href="#">Geschäftsbedingungen</a> und <a href="#">Datenschutzrichtlinie</a> gelesen haben und volljährig sind.',
-                footerDesc: 'renoxbet verwendet Cookies, um Ihnen das beste Erlebnis zu bieten. Durch den Verbleib stimmen Sie zu. <a href="#">Mehr erfahren</a>',
-                learnMore: "Mehr erfahren",
-                copyright: "Copyright &copy; 2026 «renoxbet». Alle Rechte vorbehalten.",
-                supportTitle: "Support 24/7",
-                supportDesc: "Fragen stellen",
-                mobileApp: "Mobile Anwendung",
-                selectLanguageTitle: "Sprache auswählen",
-                searchPlaceholder: "Suchen"
-            },
-            IT: {
-                pageTitle: "Registrazione",
-                oneClick: "Un clic",
-                socialNetworks: "Social network",
-                byEmail: "Tramite e-mail",
-                byPhone: "Tramite telefono",
-                idCompte: "ID Conto",
-                selectCurrency: "Seleziona valuta",
-                promoCode: "Inserisci codice promozionale",
-                registerBtn: "Registrati",
-                termsText: 'Cliccando su questo pulsante confermi di aver letto e accettato i <a href="#">Termini e condizioni</a> e l\'<a href="#">Informativa sulla privacy</a> e di essere maggiorenne.',
-                footerDesc: 'renoxbet utilizza i cookie per garantirti la migliore esperienza. <a href="#">Scopri di più</a>',
-                learnMore: "Scopri di più",
-                copyright: "Copyright &copy; 2026 «renoxbet». Tutti i diritti riservati.",
-                supportTitle: "Assistenza 24/7",
-                supportDesc: "Fai qualsiasi domanda",
-                mobileApp: "Applicazione Mobile",
-                selectLanguageTitle: "Seleziona lingua",
-                searchPlaceholder: "Cerca"
-            },
-            RU: {
-                pageTitle: "Регистрация",
-                oneClick: "В один клик",
-                socialNetworks: "Соцсети",
-                byEmail: "По E-mail",
-                byPhone: "По телефону",
-                idCompte: "ID счета",
-                selectCurrency: "Выберите валюту",
-                promoCode: "Введите промокод",
-                registerBtn: "Зарегистрироваться",
-                termsText: 'Нажимая эту кнопку, вы подтверждаете, что ознакомились с <a href="#">Условиями</a> и <a href="#">Политикой конфиденциальности</a>.',
-                footerDesc: 'renoxbet использует файлы cookie. Оставаясь на сайте, вы соглашаетесь с этим. <a href="#">Подробнее</a>',
-                learnMore: "Подробнее",
-                copyright: "Copyright &copy; 2026 «renoxbet». Все права защищены.",
-                supportTitle: "Поддержка 24/7",
-                supportDesc: "Задать вопрос",
-                mobileApp: "Мобильное приложение",
-                selectLanguageTitle: "Выбрать язык",
-                searchPlaceholder: "Поиск"
-            },
-            PT: {
-                pageTitle: "Registo",
-                oneClick: "Um clique",
-                socialNetworks: "Redes sociais",
-                byEmail: "Por e-mail",
-                byPhone: "Por telefone",
-                idCompte: "ID da Conta",
-                selectCurrency: "Selecionar moeda",
-                promoCode: "Inserir código promocional",
-                registerBtn: "Registar",
-                termsText: 'Ao clicar neste botão, confirma que leu e concordou com os <a href="#">Termos e Condições</a>.',
-                footerDesc: 'renoxbet utiliza cookies para garantir a melhor experiência. <a href="#">Saber mais</a>',
-                learnMore: "Saber mais",
-                copyright: "Copyright &copy; 2026 «renoxbet». Todos os direitos reservados.",
-                supportTitle: "Suporte 24/7",
-                supportDesc: "Faça qualquer pergunta",
-                mobileApp: "Aplicação Móvel",
-                selectLanguageTitle: "Selecionar idioma",
-                searchPlaceholder: "Pesquisar"
-            },
-            TR: {
-                pageTitle: "Kayıt Ol",
-                oneClick: "Tek tıkla",
-                socialNetworks: "Sosyal ağlar",
-                byEmail: "E-posta ile",
-                byPhone: "Telefon ile",
-                idCompte: "Hesap ID",
-                selectCurrency: "Para birimi seç",
-                promoCode: "Promosyon kodu girin",
-                registerBtn: "Kayıt Ol",
-                termsText: 'Bu düğmeye tıklayarak <a href="#">Şartlar و Koşulları</a> kabul etmiş olursunuz.',
-                footerDesc: 'renoxbet en iyi deneyimi sağlamak için çerezleri kullanır. <a href="#">Daha fazla bilgi</a>',
-                learnMore: "Daha fazla bilgi",
-                copyright: "Copyright &copy; 2026 «renoxbet». Tüm hakları saklıdır.",
-                supportTitle: "Destek 7/24",
-                supportDesc: "Soru sorun",
-                mobileApp: "Mobil Uygulama",
-                selectLanguageTitle: "Dil seçin",
-                searchPlaceholder: "Ara"
-            },
-            CN: {
-                pageTitle: "注册",
-                oneClick: "一键注册",
-                socialNetworks: "社交网络",
-                byEmail: "通过电子邮件",
-                byPhone: "通过电话",
-                idCompte: "账号ID",
-                selectCurrency: "选择货币",
-                promoCode: "输入优惠码",
-                registerBtn: "注册",
-                termsText: '点击此按钮即表示您已阅读并同意公司的<a href="#">条款和条件</a>以及<a href="#">隐私政策</a>。',
-                footerDesc: 'renoxbet 使用 cookie 以确保您获得最佳体验。继续使用即表示同意。 <a href="#">了解更多</a>',
-                learnMore: "了解更多",
-                copyright: "Copyright &copy; 2026 «renoxbet». 保留所有权利。",
-                supportTitle: "24/7 客服",
-                supportDesc: "随时提问",
-                mobileApp: "移动应用",
-                selectLanguageTitle: "选择语言",
-                searchPlaceholder: "搜索"
-            }
-        };
+  <div class="bank-section">
+    <div class="container">
+      <div class="section-title">RECOMMANDÉS</div>
+      <div class="bank-grid">
+        <div class="bank-card open-modal" data-name="Albarid Bank" data-img="https://i.ibb.co/8gDrBZSB/IMG-1138.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/8gDrBZSB/IMG-1138.png" alt="Albarid Bank"></div>
+          <div class="bank-card-name">Albarid Bank</div>
+        </div>
+        <div class="bank-card open-modal" data-name="CIH BANK" data-img="https://i.ibb.co/HfkTrcrL/IMG-1139.png" data-acc="6542938225030300" data-beneficiary="hassan">
+          <div class="logo-space"><img src="https://i.ibb.co/HfkTrcrL/IMG-1139.png" alt="CIH BANK"></div>
+          <div class="bank-card-name">CIH BANK</div>
+        </div>
+        <div class="bank-card open-modal" data-name="CASH PLUS" data-img="https://i.ibb.co/vvh0NxWL/IMG-1141.png" data-acc="007330000463530040258890" data-beneficiary="samira attjari">
+          <div class="logo-space"><img src="https://i.ibb.co/vvh0NxWL/IMG-1141.png" alt="CASH PLUS"></div>
+          <div class="bank-card-name">CASH PLUS</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Attijari Bank" data-img="https://i.ibb.co/jkRTLjnB/IMG-1429.png" data-acc="007330000463530040258890" data-beneficiary="samira attjari">
+          <div class="logo-space"><img src="https://i.ibb.co/jkRTLjnB/IMG-1429.png" alt="Attijari Bank"></div>
+          <div class="bank-card-name">Attijari Bank</div>
+        </div>
+        <div class="bank-card open-modal" data-name="BMCE BANK" data-img="https://i.ibb.co/S74XtVWw/IMG-1143.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/S74XtVWw/IMG-1143.png" alt="BMCE BANK"></div>
+          <div class="bank-card-name">BMCE BANK</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Simple" data-img="https://i.ibb.co/NgmXvz3F/IMG-1144.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/NgmXvz3F/IMG-1144.png" alt="Simple"></div>
+          <div class="bank-card-name">Simple</div>
+        </div>
+        <div class="bank-card open-modal" data-name="JIBI BANK" data-img="https://i.ibb.co/99K8M3KX/IMG-1145.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/99K8M3KX/IMG-1145.png" alt="JIBI BANK"></div>
+          <div class="bank-card-name">JIBI BANK</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Societe Generale" data-img="https://i.ibb.co/VpYBGh0q/IMG-1146.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/VpYBGh0q/IMG-1146.png" alt="Societe Generale"></div>
+          <div class="bank-card-name">Societe Generale</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Bank Populaire" data-img="https://i.ibb.co/cS0jc7HT/IMG-1147.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/cS0jc7HT/IMG-1147.png" alt="Bank Populaire"></div>
+          <div class="bank-card-name">Bank Populaire</div>
+        </div>
+        <div class="bank-card open-modal" data-name="USDT TRC20" data-img="https://i.ibb.co/RkqF7yFD/IMG-1148.png" data-acc="TW123...USDT" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/RkqF7yFD/IMG-1148.png" alt="USDT TRC20"></div>
+          <div class="bank-card-name">USDT TRC20</div>
+        </div>
+        <div class="bank-card open-modal" data-name="USDTE ERC20" data-img="https://i.ibb.co/mCjcR7Xx/IMG-1149.png" data-acc="TW123...USDT" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/mCjcR7Xx/IMG-1149.png" alt="USDTE ERC20"></div>
+          <div class="bank-card-name">USDTE ERC20</div>
+        </div>
+        <div class="bank-card open-modal" data-name="USDC ERC20" data-img="https://i.ibb.co/35y1HHs7/IMG-1150.png" data-acc="TW123...USDC" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/35y1HHs7/IMG-1150.png" alt="USDC ERC20"></div>
+          <div class="bank-card-name">USDC ERC20</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        function setLanguage(langCode, flagUrl) {
-            const t = translations[langCode] || translations['EN'];
-            
-            document.getElementById('pageTitle').innerText = t.pageTitle;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key]) {
-                    el.innerHTML = t[key];
-                }
-            });
+  <div class="section-divider"></div>
 
-            document.getElementById('idCompteInput').placeholder = t.idCompte;
-            document.getElementById('promoCodeInput').placeholder = t.promoCode;
-            document.getElementById('langSearchInput').placeholder = t.searchPlaceholder;
+  <div class="bank-section">
+    <div class="container">
+      <div class="section-title">VIREMENT BANCAIRE</div>
+      <div class="bank-grid">
+        <div class="bank-card open-modal" data-name="Albarid Bank" data-img="https://i.ibb.co/8gDrBZSB/IMG-1138.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/8gDrBZSB/IMG-1138.png" alt="Albarid Bank"></div>
+          <div class="bank-card-name">Albarid Bank</div>
+        </div>
+        <div class="bank-card open-modal" data-name="CIH BANK" data-img="https://i.ibb.co/HfkTrcrL/IMG-1139.png" data-acc="6542938225030300" data-beneficiary="hassan">
+          <div class="logo-space"><img src="https://i.ibb.co/HfkTrcrL/IMG-1139.png" alt="CIH BANK"></div>
+          <div class="bank-card-name">CIH BANK</div>
+        </div>
+        <div class="bank-card open-modal" data-name="CASH PLUS" data-img="https://i.ibb.co/vvh0NxWL/IMG-1141.png" data-acc="007330000463530040258890" data-beneficiary="samira attjari">
+          <div class="logo-space"><img src="https://i.ibb.co/vvh0NxWL/IMG-1141.png" alt="CASH PLUS"></div>
+          <div class="bank-card-name">CASH PLUS</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Attijari Bank" data-img="https://i.ibb.co/jkRTLjnB/IMG-1429.png" data-acc="007330000463530040258890" data-beneficiary="samira attjari">
+          <div class="logo-space"><img src="https://i.ibb.co/jkRTLjnB/IMG-1429.png" alt="Attijari Bank"></div>
+          <div class="bank-card-name">Attijari Bank</div>
+        </div>
+        <div class="bank-card open-modal" data-name="BMCE BANK" data-img="https://i.ibb.co/S74XtVWw/IMG-1143.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/S74XtVWw/IMG-1143.png" alt="BMCE BANK"></div>
+          <div class="bank-card-name">BMCE BANK</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Simple" data-img="https://i.ibb.co/NgmXvz3F/IMG-1144.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/NgmXvz3F/IMG-1144.png" alt="Simple"></div>
+          <div class="bank-card-name">Simple</div>
+        </div>
+        <div class="bank-card open-modal" data-name="JIBI BANK" data-img="https://i.ibb.co/99K8M3KX/IMG-1145.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/99K8M3KX/IMG-1145.png" alt="JIBI BANK"></div>
+          <div class="bank-card-name">JIBI BANK</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Societe Generale" data-img="https://i.ibb.co/VpYBGh0q/IMG-1146.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/VpYBGh0q/IMG-1146.png" alt="Societe Generale"></div>
+          <div class="bank-card-name">Societe Generale</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Bank Populaire" data-img="https://i.ibb.co/cS0jc7HT/IMG-1147.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/cS0jc7HT/IMG-1147.png" alt="Bank Populaire"></div>
+          <div class="bank-card-name">Bank Populaire</div>
+        </div>
+        <div class="bank-card open-modal" data-name="CDM Bank" data-img="https://i.ibb.co/ZzQqW8MP/IMG-1157.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/ZzQqW8MP/IMG-1157.png" alt="CDM Bank"></div>
+          <div class="bank-card-name">CDM Bank</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Credit Agricole" data-img="https://i.ibb.co/zT7dvwzy/IMG-1158.png" data-acc="007330001090330040108046" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/zT7dvwzy/IMG-1158.png" alt="Credit Agricole"></div>
+          <div class="bank-card-name">Credit Agricole</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            currentLangText.innerHTML = `${langCode} <img src="${flagUrl}" class="lang-flag" style="margin: 0; width: 18px; height: 18px;">`;
+  <div class="section-divider"></div>
 
-            if (langCode === 'AR') {
-                document.documentElement.setAttribute('dir', 'rtl');
-            } else {
-                document.documentElement.setAttribute('dir', 'ltr');
-            }
+  <div class="bank-section">
+    <div class="container">
+      <div class="section-title">CARTES DE PAIEMENT</div>
+      <div class="bank-grid">
+        <div class="bank-card open-modal" data-name="Visa" data-img="https://i.ibb.co/gMXk13Wj/IMG-1163.png" data-acc="VISA-CARD-ACC" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/gMXk13Wj/IMG-1163.png" alt="Visa"></div>
+          <div class="bank-card-name">Visa</div>
+        </div>
+        <div class="bank-card open-modal" data-name="MasterCard" data-img="https://i.ibb.co/dn7kCLV/IMG-1164.png" data-acc="MC-CARD-ACC" data-beneficiary="samira 1">
+          <div class="logo-space"><img src="https://i.ibb.co/dn7kCLV/IMG-1164.png" alt="MasterCard"></div>
+          <div class="bank-card-name">MasterCard</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="bank-section">
+    <div class="container">
+      <div class="section-title">CRYPTOMONNAIE</div>
+      <div class="bank-grid">
+        <div class="bank-card open-modal" data-name="USDT TRC20" data-img="https://i.ibb.co/RkqF7yFD/IMG-1148.png" data-acc="TW123...USDT" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/RkqF7yFD/IMG-1148.png" alt="USDT TRC20"></div>
+          <div class="bank-card-name">USDT TRC20</div>
+        </div>
+        <div class="bank-card open-modal" data-name="USDTE ERC20" data-img="https://i.ibb.co/mCjcR7Xx/IMG-1149.png" data-acc="TW123...USDT" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/mCjcR7Xx/IMG-1149.png" alt="USDTE ERC20"></div>
+          <div class="bank-card-name">USDTE ERC20</div>
+        </div>
+        <div class="bank-card open-modal" data-name="USDC ERC20" data-img="https://i.ibb.co/35y1HHs7/IMG-1150.png" data-acc="TW123...USDC" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/35y1HHs7/IMG-1150.png" alt="USDC ERC20"></div>
+          <div class="bank-card-name">USDC ERC20</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Ethereum" data-img="https://i.ibb.co/MkKZGpmm/IMG-1166.png" data-acc="ETH-ACC-123" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/MkKZGpmm/IMG-1166.png" alt="Ethereum"></div>
+          <div class="bank-card-name">Ethereum</div>
+        </div>
+        <div class="bank-card open-modal" data-name="XRP" data-img="https://i.ibb.co/k283RnFh/IMG-1167.png" data-acc="XRP-ACC-123" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/k283RnFh/IMG-1167.png" alt="XRP"></div>
+          <div class="bank-card-name">XRP</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Bitcoin" data-img="https://i.ibb.co/HLjrhgdn/IMG-1169.png" data-acc="BTC-ACC-123" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/HLjrhgdn/IMG-1169.png" alt="Bitcoin"></div>
+          <div class="bank-card-name">Bitcoin</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Cardano" data-img="https://i.ibb.co/b5xf9ksM/IMG-1171.png" data-acc="ADA-ACC-123" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/b5xf9ksM/IMG-1171.png" alt="Cardano"></div>
+          <div class="bank-card-name">Cardano</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Bitcoin Cash" data-img="https://i.ibb.co/chqb2BdY/IMG-1172.png" data-acc="BCH-ACC-123" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/chqb2BdY/IMG-1172.png" alt="Bitcoin Cash"></div>
+          <div class="bank-card-name">Bitcoin Cash</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Dogecoin" data-img="https://i.ibb.co/dwY9qQZc/IMG-1173.png" data-acc="DOGE-ACC-123" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/dwY9qQZc/IMG-1173.png" alt="Dogecoin"></div>
+          <div class="bank-card-name">Dogecoin</div>
+        </div>
+        <div class="bank-card open-modal" data-name="Litecoin" data-img="https://i.ibb.co/dJ68bRjn/IMG-1174.png" data-acc="LTC-ACC-123" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/dJ68bRjn/IMG-1174.png" alt="Litecoin"></div>
+          <div class="bank-card-name">Litecoin</div>
+        </div>
+        <div class="bank-card open-modal" data-name="TRX" data-img="https://i.ibb.co/Xrgwph74/IMG-1176.png" data-acc="TRX-ACC-123" data-beneficiary="Crypto Wallet">
+          <div class="logo-space"><img src="https://i.ibb.co/Xrgwph74/IMG-1176.png" alt="TRX"></div>
+          <div class="bank-card-name">TRX</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  // التقاط الـ userId من الرابط وتخزينه، وإذا لم يوجد يتم جلبه من الذاكرة المحلية أو وضع قيمة افتراضية
+  const urlParams = new URLSearchParams(window.location.search);
+  const userIdParam = urlParams.get('userId');
+  if (userIdParam) {
+    localStorage.setItem('userId', userIdParam);
+  }
+
+  const storedId = localStorage.getItem('userId') || '12345678';
+  document.getElementById('account-number').textContent = storedId;
+
+  const paymentModal = document.getElementById('paymentModal');
+  const modalContentBox = document.getElementById('modalContentBox');
+  const modalTriggers = document.querySelectorAll('.open-modal');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalBankImg = document.getElementById('modalBankImg');
+  const modalAccountTitle = document.getElementById('modalAccountTitle');
+  const modalAccountNumber = document.getElementById('modalAccountNumber');
+  const modalBeneficiaryTitle = document.getElementById('modalBeneficiaryTitle');
+  const modalBeneficiaryName = document.getElementById('modalBeneficiaryName');
+  const modalBodyContent = document.getElementById('modalBodyContent');
+
+  const originalFormContent = modalBodyContent.innerHTML;
+
+  modalTriggers.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const bankName = card.getAttribute('data-name');
+      const bankImg = card.getAttribute('data-img');
+      const bankAcc = card.getAttribute('data-acc');
+      const beneficiary = card.getAttribute('data-beneficiary');
+
+      modalBankImg.src = bankImg;
+      modalAccountTitle.textContent = 'رقم الحساب البنكي :';
+      modalAccountNumber.textContent = bankAcc;
+      modalBeneficiaryTitle.textContent = bankName;
+      modalBeneficiaryName.textContent = beneficiary;
+
+      modalBodyContent.innerHTML = originalFormContent;
+      attachFormSubmitEvent();
+
+      const cashplusInstructionImg = document.getElementById('cashplus-instruction-img');
+      if (cashplusInstructionImg) {
+        if (bankName.toUpperCase().includes('CASH PLUS')) {
+          cashplusInstructionImg.style.display = 'block';
+        } else {
+          cashplusInstructionImg.style.display = 'none';
         }
+      }
 
-        langSelectBtn.addEventListener('click', () => {
-            langModal.classList.add('open');
-        });
+      // إظهار المودال ومنع تحرك الخلفية
+      paymentModal.classList.add('active');
+      document.body.classList.add('modal-open');
+    });
+  });
 
-        closeLangModal.addEventListener('click', () => {
-            langModal.classList.remove('open');
-        });
+  // إغلاق المودال بالضغط على زر الإغلاق
+  modalCloseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeModal();
+  });
 
-        langItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const lang = item.getAttribute('data-lang');
-                const flagUrl = item.getAttribute('data-flag');
-                
-                setLanguage(lang, flagUrl);
-                langModal.classList.remove('open');
-            });
-        });
+  // إغلاق المودال عند النقر في الفراغ الرمادي المحيط بالصندوق فقط (وليس داخله)
+  paymentModal.addEventListener('click', (e) => {
+    if (e.target === paymentModal) {
+      closeModal();
+    }
+  });
 
-        langSearchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            langItems.forEach(item => {
-                const name = item.getAttribute('data-name').toLowerCase();
-                const code = item.getAttribute('data-code').toLowerCase();
-                if (name.includes(term) || code.includes(term)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
-    </script>
+  // منع انتشار الحدث داخل محتوى المودال لكي لا يغلق بالخطأ
+  modalContentBox.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  function closeModal() {
+    paymentModal.classList.remove('active');
+    document.body.classList.remove('modal-open');
+  }
+
+  function attachFormSubmitEvent() {
+    const depositForm = document.getElementById('depositForm');
+    if (depositForm) {
+      depositForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        modalBodyContent.innerHTML = `
+          <div style="text-align: center; padding: 25px 10px;">
+            <div style="font-size: 16px; font-weight: 500; color: #333; margin-top: 15px; line-height: 1.5;">
+              La demande de dépôt a été créée avec succès.
+            </div>
+          </div>
+        `;
+      });
+    }
+  }
+
+  function copyData(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = element.nextElementSibling;
+      if (toast && toast.classList.contains('toast-copied')) {
+        toast.style.display = 'inline';
+        setTimeout(() => { toast.style.display = 'none'; }, 1500);
+      }
+    });
+  }
+
+  function handleFileSelect(input) {
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const previewCard = document.getElementById('file_preview_card');
+      const previewImg = document.getElementById('preview_img');
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          previewCard.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+
+  function removeFile(event) {
+    event.stopPropagation();
+    document.getElementById('real_file_input').value = '';
+    document.getElementById('file_preview_card').style.display = 'none';
+  }
+</script>
+
 </body>
 </html>
