@@ -20,7 +20,8 @@
         body {
             background-color: #1a2332;
             padding-top: 56px; 
-            overflow: auto;
+            margin: 0;
+            overflow-x: hidden;
         }
 
         /* ----- Base Header Style ----- */
@@ -29,7 +30,7 @@
             top: 0;
             left: 0;
             background-color: #202d3d;
-            display: flex;
+            display: none; /* مخفي بشكل افتراضي */
             justify-content: space-between;
             align-items: center;
             padding: 8px 12px;
@@ -37,6 +38,11 @@
             height: 56px;
             border-bottom: 1px solid #2a3a4e;
             z-index: 1000;
+        }
+
+        /* الكلاس باش نبينو هيدر واحد محدد */
+        .header-bar.active-header {
+            display: flex !important;
         }
 
         .left-section, .right-section {
@@ -209,12 +215,9 @@
             border-radius: 50%;
         }
 
-        .header-variant { display: none; }
-
         .content-frame {
             width: 100%;
-            height: auto;
-            min-height: 100vh;
+            height: calc(100vh - 56px);
             border: none;
             display: block;
         }
@@ -223,7 +226,7 @@
 <body>
 
     <!-- الهيدر الأول (قبل الضغط على Register) -->
-    <header id="header-main" class="header-bar header-variant">
+    <header id="header-main" class="header-bar">
         <div class="left-section">
             <a href="/" class="renox-logo">
                 <span class="part-reno">reno</span><span class="part-xbet">xbet</span>
@@ -249,7 +252,7 @@
     </header>
 
     <!-- الهيدر الثاني (بعد الضغط على Register الخضراء) -->
-    <header id="header-register" class="header-bar header-variant">
+    <header id="header-register" class="header-bar">
         <div class="left-section">
             <a href="/" class="renox-logo">
                 <span class="part-reno">reno</span><span class="part-xbet">xbet</span>
@@ -283,15 +286,18 @@
     </main>
 
     <script>
-        // دالة تبديل الهيدر
+        // دالة تبديل الهيدر بطريقة سليمة
         function showHeader(type) {
-            document.getElementById('header-main').style.display = 'none';
-            document.getElementById('header-register').style.display = 'none';
+            const headerMain = document.getElementById('header-main');
+            const headerRegister = document.getElementById('header-register');
+            
+            headerMain.classList.remove('active-header');
+            headerRegister.classList.remove('active-header');
             
             if (type === 'register') {
-                document.getElementById('header-register').style.display = 'flex';
+                headerRegister.classList.add('active-header');
             } else {
-                document.getElementById('header-main').style.display = 'flex';
+                headerMain.classList.add('active-header');
             }
         }
 
@@ -318,7 +324,6 @@
                     iframeDoc.addEventListener('click', function(e) {
                         const btn = e.target.closest('button, .register-btn, input[type="submit"]');
                         if (btn) {
-                            // تغيير الهيدر مباشرة عند الضغط
                             showHeader('register');
                         }
                     });
