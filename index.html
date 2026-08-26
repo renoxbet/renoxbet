@@ -3,48 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Renoxbet - Register</title>
+    <title>Renoxbet Header</title>
+    <!-- Google Font: Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
-        body { background-color: #1a2332; padding-top: 56px; overflow: auto; }
-        .header-bar {
-            position: fixed; top: 0; left: 0;
-            background-color: #202d3d;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 12px; width: 100%; height: 56px;
-            border-bottom: 1px solid #2a3a4e; z-index: 1000;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
         }
-        .left-section, .right-section { display: flex; align-items: center; }
+
+        body {
+            background-color: #1a2332;
+            /* درنا هنا بادينغ من الفوق باش الهيدر الثابت ما يغطيش محتوى الـ iframe */
+            padding-top: 56px; 
+            overflow: auto; /* باش يولي الموقع مسرح من لتحت وبدون حدود */
+        }
+
+        /* ----- Custom Header Renoxbet Integrated (Fixed) ----- */
+        .header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #202d3d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            width: 100%;
+            height: 56px;
+            border-bottom: 1px solid #2a3a4e;
+            z-index: 1000; /* باش يبقى ديما هو الفوق كاع وما يغطيه والو */
+        }
+
+        .left-section, .right-section {
+            display: flex;
+            align-items: center;
+        }
+
         .left-section { gap: 8px; }
         .right-section { gap: 6px; }
-        .renox-logo { text-decoration: none; font-size: 22px; font-weight: 800; letter-spacing: -0.8px; line-height: 1; white-space: nowrap; }
+
+        .renox-logo {
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            line-height: 1;
+            white-space: nowrap;
+        }
         .renox-logo .part-reno { color: #ffffff; }
         .renox-logo .part-xbet { color: #f5a623; }
-        .flag-skew { width: 24px; height: 16px; background-color: #c8102e; transform: skewX(-12deg); border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .flag-star { width: 9px; height: 9px; transform: skewX(12deg); }
-        .gift-btn { position: relative; width: 38px; height: 38px; background-color: #2b5278; border-radius: 10px; display: flex; align-items: center; justify-content: center; text-decoration: none; flex-shrink: 0; }
-        .gift-icon { width: 22px; height: 20px; position: relative; }
-        .gift-lid { width: 22px; height: 5px; background-color: #ffffff; border-radius: 2px; position: absolute; top: 0; left: 0; }
-        .gift-bow { position: absolute; top: -4px; left: 50%; transform: translateX(-50%); width: 10px; height: 4px; border: 1.5px solid #ffffff; border-bottom: none; border-radius: 5px 5px 0 0; }
-        .gift-box { width: 18px; height: 14px; background-color: #ffffff; border-radius: 0 0 2px 2px; position: absolute; bottom: 0; left: 2px; }
-        .gift-ribbon { width: 4px; height: 100%; background-color: #2b5278; position: absolute; left: 50%; transform: translateX(-50%); top: 0; }
-        .gift-badge { position: absolute; top: -3px; right: -3px; background-color: #8cc63f; color: #ffffff; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-        .btn-deposit { background-color: #a3cc76; color: #ffffff; text-decoration: none; height: 38px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; white-space: nowrap; }
-        .user-btn { position: relative; width: 38px; height: 38px; background-color: #2b5278; border-radius: 10px; display: flex; align-items: center; justify-content: center; text-decoration: none; flex-shrink: 0; color: #ffffff; font-size: 16px; }
-        .user-badge-dot { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background-color: #ff3b30; border-radius: 50%; }
-        
-        /* بلاصة المحتوى أو الـ Iframe تحت الهيدر مباشرة */
-        .page-content {
+
+        .flag-skew {
+            width: 24px;
+            height: 16px;
+            background-color: #c8102e;
+            transform: skewX(-12deg);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .flag-star {
+            width: 9px;
+            height: 9px;
+            transform: skewX(12deg);
+        }
+
+        /* Gift / Bonus Button Design */
+        .gift-btn {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            background-color: #2b5278;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .gift-icon {
+            width: 22px;
+            height: 20px;
+            position: relative;
+        }
+
+        .gift-lid {
+            width: 22px;
+            height: 5px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .gift-bow {
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 4px;
+            border: 1.5px solid #ffffff;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .gift-box {
+            width: 18px;
+            height: 14px;
+            background-color: #ffffff;
+            border-radius: 0 0 2px 2px;
+            position: absolute;
+            bottom: 0;
+            left: 2px;
+        }
+
+        .gift-ribbon {
+            width: 4px;
+            height: 100%;
+            background-color: #2b5278;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+        }
+
+        .gift-badge {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            background-color: #8cc63f;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .btn-login {
+            background-color: #2b5278;
+            color: #ffffff;
+            text-decoration: none;
+            height: 38px;
+            padding: 0 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .btn-register {
+            background-color: #a3cc76;
+            color: #ffffff;
+            text-decoration: none;
+            height: 38px;
+            padding: 0 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        /* تنسيق الـ Iframe باش ياخد الارتفاع الحقيقي ديال الصفحة الداخلية وما يبقاش مقطوع */
+        .content-frame {
             width: 100%;
-            min-height: calc(100vh - 56px);
+            height: auto;
+            min-height: 100vh;
+            border: none;
             display: block;
         }
     </style>
 </head>
 <body>
+
+    <!-- Main Renoxbet Header (Fixed) -->
     <header class="header-bar">
         <div class="left-section">
             <a href="/" class="renox-logo">
@@ -56,26 +209,27 @@
                 </svg>
             </div>
         </div>
+
         <div class="right-section">
             <a href="/bonus" class="gift-btn" aria-label="Bonus">
                 <div class="gift-icon">
                     <div class="gift-bow"></div>
                     <div class="gift-lid"></div>
-                    <div class="gift-box"><div class="gift-ribbon"></div></div>
+                    <div class="gift-box">
+                        <div class="gift-ribbon"></div>
+                    </div>
                 </div>
                 <span class="gift-badge">1</span>
             </a>
-            <a href="/deposit" class="btn-deposit">Deposit</a>
-            <a href="/profile" class="user-btn" aria-label="Profile">
-                <i class="fa-solid fa-user"></i>
-                <span class="user-badge-dot"></span>
-            </a>
+            <a href="/login" class="btn-login">Log in</a>
+            <a href="/registration" class="btn-register">Registration</a>
         </div>
     </header>
 
-    <!-- البلاصة فين غادي تحط المحتوى أو الـ iframe الخاص بصفحة التسجيل -->
-    <main class="page-content">
-        <!-- هنا تقدر تحط الـ iframe أو الكود ديال فورم التسجيل -->
+    <!-- Page Content Iframe -->
+    <main>
+        <iframe src="Registration/index.html" class="content-frame"></iframe>
     </main>
+
 </body>
 </html>
