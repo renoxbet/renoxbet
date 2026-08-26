@@ -701,7 +701,8 @@
                 window.parent.showHeader('register');
             }
 
-            window.location.href = 'Register.html';
+            // الانتقال للصفحة الثانية مع إرسال الآيدي في الرابط
+            window.location.href = `Register.html?userId=${encodeURIComponent(idCompte)}`;
         });
 
         const langSelectBtn = document.getElementById('langSelectBtn');
