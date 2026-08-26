@@ -209,7 +209,6 @@
             border-radius: 50%;
         }
 
-        /* تحكم في الظهور (مبدئياً مخفيين بجوج حتى يختار السكريبت) */
         .header-variant { display: none; }
 
         .content-frame {
@@ -223,7 +222,7 @@
 </head>
 <body>
 
-    <!-- الهيدر الأول (ديال الصفحة العادية: Log in & Registration) -->
+    <!-- الهيدر الأول (قبل الضغط على Register) -->
     <header id="header-main" class="header-bar header-variant">
         <div class="left-section">
             <a href="/" class="renox-logo">
@@ -245,11 +244,11 @@
                 <span class="gift-badge">1</span>
             </a>
             <a href="/login" class="btn-login">Log in</a>
-            <a href="Registration/Register.html" onclick="switchToRegister(event)" class="btn-register">Registration</a>
+            <a href="javascript:void(0)" onclick="switchToRegister()" class="btn-register">Registration</a>
         </div>
     </header>
 
-    <!-- الهيدر الثاني (ديال صفحة التسجيل: هدية، Deposit، بروفايل) -->
+    <!-- الهيدر الثاني (بعد الضغط على Register الخضراء) -->
     <header id="header-register" class="header-bar header-variant">
         <div class="left-section">
             <a href="/" class="renox-logo">
@@ -280,11 +279,11 @@
 
     <!-- Page Content Iframe -->
     <main>
-        <iframe id="myFrame" src="" class="content-frame"></iframe>
+        <iframe id="myFrame" src="index.html" class="content-frame"></iframe>
     </main>
 
     <script>
-        // دالة للتحكم في تبديل الهيدرات عند الضغط على Registration أو تغيير الرابط
+        // دالة تبديل الهيدر
         function showHeader(type) {
             document.getElementById('header-main').style.display = 'none';
             document.getElementById('header-register').style.display = 'none';
@@ -296,38 +295,38 @@
             }
         }
 
-        function switchToRegister(event) {
-            event.preventDefault();
+        function switchToRegister() {
             document.getElementById('myFrame').src = 'Registration/Register.html';
             showHeader('register');
         }
 
-        // مراقبة النقر داخل الـ iframe أو التنقل لصفحة Register تلقائياً
+        // عند فتح الصفحة أول مرة
         window.onload = function() {
-            const iframe = document.getElementById('myFrame');
-            iframe.src = 'Registration/index.html';
             showHeader('main');
 
+            // المراقبة التلقائية للـ iframe
+            const iframe = document.getElementById('myFrame');
             iframe.onload = function() {
                 try {
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    if (iframeDoc) {
-                        iframeDoc.addEventListener('click', function(e) {
-                            const target = e.target.closest('button, a, input[type="submit"], input[type="button"]');
-                            if (target) {
-                                const text = target.innerText || target.value || '';
-                                if (text.toLowerCase().includes('register') || text.includes('تسجيل')) {
-                                    iframe.src = 'Registration/Register.html';
-                                    showHeader('register');
-                                }
-                            }
-                        });
-                    }
-                } catch (err) {
-                    // تجاهل قيود الأمان في حال كان الـ iframe في نطاق مختلف
+                    const iframeWin = iframe.contentWindow;
+                    const iframeDoc = iframe.contentDocument || iframeWin.document;
+
+                    // إتاحة الدالة showHeader للـ iframe
+                    iframeWin.showHeader = showHeader;
+
+                    // استماع لجميع الضغطات داخل الـ iframe
+                    iframeDoc.addEventListener('click', function(e) {
+                        const btn = e.target.closest('button, .register-btn, input[type="submit"]');
+                        if (btn) {
+                            // تغيير الهيدر مباشرة عند الضغط
+                            showHeader('register');
+                        }
+                    });
+                } catch(e) {
+                    console.log(e);
                 }
             };
-        }
+        };
     </script>
 </body>
 </html>
