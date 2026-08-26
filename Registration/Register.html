@@ -741,6 +741,12 @@
 </main>
 
 <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const userIdParam = urlParams.get('userId');
+  if (userIdParam) {
+    localStorage.setItem('userId', userIdParam);
+  }
+
   const storedId = localStorage.getItem('userId') || '12345678';
   document.getElementById('account-number').textContent = storedId;
 
