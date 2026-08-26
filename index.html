@@ -209,7 +209,7 @@
             border-radius: 50%;
         }
 
-        /* تحكم في الظهور (مبدئياً مخفيين بجوج حتى يختار السكريبت) */
+        /* تحكم في الظهور */
         .header-variant { display: none; }
 
         .content-frame {
@@ -226,7 +226,7 @@
     <!-- الهيدر الأول (ديال الصفحة العادية: Log in & Registration) -->
     <header id="header-main" class="header-bar header-variant">
         <div class="left-section">
-            <a href="/" class="renox-logo">
+            <a href="index.html" class="renox-logo">
                 <span class="part-reno">reno</span><span class="part-xbet">xbet</span>
             </a>
             <div class="flag-skew">
@@ -244,15 +244,17 @@
                 </div>
                 <span class="gift-badge">1</span>
             </a>
-            <a href="/login" class="btn-login">Log in</a>
-            <a href="Registration/Register.html" onclick="switchToRegister(event)" class="btn-register">Registration</a>
+            <!-- زر Log in كيوقع ليه غير Refresh أو إعادة توجيه لنفس index.html -->
+            <a href="index.html" class="btn-login">Log in</a>
+            <!-- زر Registration كيوقع ليه غير Refresh أو إعادة توجيه لنفس index.html -->
+            <a href="index.html" class="btn-register">Registration</a>
         </div>
     </header>
 
-    <!-- الهيدر الثاني (ديال صفحة التسجيل: هدية، Deposit، بروفايل) -->
+    <!-- الهيدر الثاني (إذا احتجت تخليه فشي بلاصة أخرى) -->
     <header id="header-register" class="header-bar header-variant">
         <div class="left-section">
-            <a href="/" class="renox-logo">
+            <a href="index.html" class="renox-logo">
                 <span class="part-reno">reno</span><span class="part-xbet">xbet</span>
             </a>
             <div class="flag-skew">
@@ -268,7 +270,7 @@
                     <div class="gift-lid"></div>
                     <div class="gift-box"><div class="gift-ribbon"></div></div>
                 </div>
-                <span class="gift-badge">1</span>
+                <span class="gift-badge">1`</span>
             </a>
             <a href="/deposit" class="btn-deposit">Deposit</a>
             <a href="/profile" class="user-btn" aria-label="Profile">
@@ -284,7 +286,6 @@
     </main>
 
     <script>
-        // دالة للتحكم في تبديل الهيدرات عند الضغط على Registration أو تغيير الرابط
         function showHeader(type) {
             document.getElementById('header-main').style.display = 'none';
             document.getElementById('header-register').style.display = 'none';
@@ -296,13 +297,7 @@
             }
         }
 
-        function switchToRegister(event) {
-            event.preventDefault();
-            document.getElementById('myFrame').src = 'Registration/Register.html';
-            showHeader('register');
-        }
-
-        // عند فتح الصفحة لأول مرة (مثلاً تبدأ بالهيدر الرئيسي)
+        // عند فتح الصفحة لأول مرة غدي يبقا ديما الهيدر الرئيسي شغال والصفحة الرئيسية هي اللي كاتطلع
         window.onload = function() {
             document.getElementById('myFrame').src = 'Registration/index.html'; 
             showHeader('main'); 
