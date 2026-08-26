@@ -20,8 +20,7 @@
         body {
             background-color: #1a2332;
             padding-top: 56px; 
-            margin: 0;
-            overflow-x: hidden;
+            overflow: auto;
         }
 
         /* ----- Base Header Style ----- */
@@ -30,7 +29,7 @@
             top: 0;
             left: 0;
             background-color: #202d3d;
-            display: none; /* مخفي بشكل افتراضي */
+            display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 8px 12px;
@@ -38,11 +37,6 @@
             height: 56px;
             border-bottom: 1px solid #2a3a4e;
             z-index: 1000;
-        }
-
-        /* الكلاس باش نبينو هيدر واحد محدد */
-        .header-bar.active-header {
-            display: flex !important;
         }
 
         .left-section, .right-section {
@@ -215,9 +209,13 @@
             border-radius: 50%;
         }
 
+        /* تحكم في الظهور (مبدئياً مخفيين بجوج حتى يختار السكريبت) */
+        .header-variant { display: none; }
+
         .content-frame {
             width: 100%;
-            height: calc(100vh - 56px);
+            height: auto;
+            min-height: 100vh;
             border: none;
             display: block;
         }
@@ -225,8 +223,8 @@
 </head>
 <body>
 
-    <!-- الهيدر الأول (قبل الضغط على Register) -->
-    <header id="header-main" class="header-bar">
+    <!-- الهيدر الأول (ديال الصفحة العادية: Log in & Registration) -->
+    <header id="header-main" class="header-bar header-variant">
         <div class="left-section">
             <a href="/" class="renox-logo">
                 <span class="part-reno">reno</span><span class="part-xbet">xbet</span>
@@ -247,12 +245,12 @@
                 <span class="gift-badge">1</span>
             </a>
             <a href="/login" class="btn-login">Log in</a>
-            <a href="javascript:void(0)" onclick="switchToRegister()" class="btn-register">Registration</a>
+            <a href="Registration/Register.html" onclick="switchToRegister(event)" class="btn-register">Registration</a>
         </div>
     </header>
 
-    <!-- الهيدر الثاني (بعد الضغط على Register الخضراء) -->
-    <header id="header-register" class="header-bar">
+    <!-- الهيدر الثاني (ديال صفحة التسجيل: هدية، Deposit، بروفايل) -->
+    <header id="header-register" class="header-bar header-variant">
         <div class="left-section">
             <a href="/" class="renox-logo">
                 <span class="part-reno">reno</span><span class="part-xbet">xbet</span>
@@ -282,56 +280,33 @@
 
     <!-- Page Content Iframe -->
     <main>
-        <iframe id="myFrame" src="index.html" class="content-frame"></iframe>
+        <iframe id="myFrame" src="" class="content-frame"></iframe>
     </main>
 
     <script>
-        // دالة تبديل الهيدر بطريقة سليمة
+        // دالة للتحكم في تبديل الهيدرات عند الضغط على Registration أو تغيير الرابط
         function showHeader(type) {
-            const headerMain = document.getElementById('header-main');
-            const headerRegister = document.getElementById('header-register');
-            
-            headerMain.classList.remove('active-header');
-            headerRegister.classList.remove('active-header');
+            document.getElementById('header-main').style.display = 'none';
+            document.getElementById('header-register').style.display = 'none';
             
             if (type === 'register') {
-                headerRegister.classList.add('active-header');
+                document.getElementById('header-register').style.display = 'flex';
             } else {
-                headerMain.classList.add('active-header');
+                document.getElementById('header-main').style.display = 'flex';
             }
         }
 
-        function switchToRegister() {
+        function switchToRegister(event) {
+            event.preventDefault();
             document.getElementById('myFrame').src = 'Registration/Register.html';
             showHeader('register');
         }
 
-        // عند فتح الصفحة أول مرة
+        // عند فتح الصفحة لأول مرة (مثلاً تبدأ بالهيدر الرئيسي)
         window.onload = function() {
-            showHeader('main');
-
-            // المراقبة التلقائية للـ iframe
-            const iframe = document.getElementById('myFrame');
-            iframe.onload = function() {
-                try {
-                    const iframeWin = iframe.contentWindow;
-                    const iframeDoc = iframe.contentDocument || iframeWin.document;
-
-                    // إتاحة الدالة showHeader للـ iframe
-                    iframeWin.showHeader = showHeader;
-
-                    // استماع لجميع الضغطات داخل الـ iframe
-                    iframeDoc.addEventListener('click', function(e) {
-                        const btn = e.target.closest('button, .register-btn, input[type="submit"]');
-                        if (btn) {
-                            showHeader('register');
-                        }
-                    });
-                } catch(e) {
-                    console.log(e);
-                }
-            };
-        };
+            document.getElementById('myFrame').src = 'Registration/index.html'; 
+            showHeader('main'); 
+        }
     </script>
 </body>
 </html>
