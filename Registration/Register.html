@@ -110,7 +110,7 @@
     .copy-btn svg {
       width: 24px;
       height: 24px;
-      fill: #f5a623;
+      fill: #17212e;
     }
     .copied-tooltip {
       position: absolute;
@@ -346,7 +346,7 @@
     .copy-btn-custom svg {
       width: 18px;
       height: 18px;
-      fill: #f5a623;
+      fill: #17212e;
     }
     .toast-copied {
       font-size: 12px;
@@ -472,7 +472,7 @@
         </div>
 
         <div class="info-line">
-          <strong>Cash plus </strong> 
+          <strong id="modalBeneficiaryTitle">Cash plus</strong> 
           <span class="value-text" id="modalBeneficiaryName">0702768353</span>
           <button type="button" class="copy-btn-custom" onclick="copyData(document.getElementById('modalBeneficiaryName').textContent, this)">
             <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
@@ -751,6 +751,7 @@
   const modalBankImg = document.getElementById('modalBankImg');
   const modalAccountTitle = document.getElementById('modalAccountTitle');
   const modalAccountNumber = document.getElementById('modalAccountNumber');
+  const modalBeneficiaryTitle = document.getElementById('modalBeneficiaryTitle');
   const modalBeneficiaryName = document.getElementById('modalBeneficiaryName');
   const modalBodyContent = document.getElementById('modalBodyContent');
 
@@ -765,8 +766,9 @@
       const beneficiary = card.getAttribute('data-beneficiary');
 
       modalBankImg.src = bankImg;
-      modalAccountTitle.textContent = bankName + ' :';
+      modalAccountTitle.textContent = 'رقم الحساب البنكي :';
       modalAccountNumber.textContent = bankAcc;
+      modalBeneficiaryTitle.textContent = bankName;
       modalBeneficiaryName.textContent = beneficiary;
 
       modalBodyContent.innerHTML = originalFormContent;
